@@ -3,9 +3,6 @@ const projects = (() => {
     const getList = () => {
         return list;
     }
-    const add = (project) => {
-        list.push(project);
-    };
 
     let selector;
     const changeSelector = (n) => {
