@@ -1,8 +1,26 @@
+const projects = (() => {
+    const list = [];
+    const getList = () => {
+        return list;
+    }
+    const add = (project) => {
+        list.push(project);
+    };
+
+    let selector;
+    const changeSelector = (n) => {
+        selector = n;
+    };
+
+    return {getList, add, changeSelector};
+})();
+
+
 const checkLocalProjectList = () => {
     if (!localStorage.getItem("projects")) {
-        const projects = [];
-        projects[0] = createProject(projects.list);
-        localStorage("set", projects);
+        projects.add(createProject());
+        projects.changeSelector(0);
+        localStorage("set", projects.getList());
     } else {
         //Gets the projects from the local storage and then append it to the page
     }
@@ -17,13 +35,8 @@ const localStorage = (mode, item) => {
     }
 }
 
-const projectPointer = () => {
-    // Gets the index value of the project that is selected
-}
-
-const createProject = (list) => {
+const createProject = () => {
     const project = [];
-    list.push(project);
     return project;
 }
 
