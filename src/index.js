@@ -1,8 +1,10 @@
 const projects = (() => {
     const list = [];
+
     const getList = () => {
         return list.slice(0);
     };
+    
     const addToList = (project) => {
         list.push(project);
     };
