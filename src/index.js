@@ -1,3 +1,5 @@
+import { appendProject } from "./dom";
+
 const projectList = (() => {
     const list = [];
 
@@ -15,8 +17,8 @@ const projectList = (() => {
 const projectSelector = (() => {
     let selector;
 
-    const set = (n) => {
-        selector = n;
+    const set = (list, project) => {
+        selector = list.indexOf(project);
     };
 
     const get = () => {
@@ -48,11 +50,14 @@ const localSave = (() => {
 const checkLocalProjectList = (() => {
     if (!localSave.get("projects")) {
         // Creates new default project and saves it locally
-        projectList.add(createProject());
+        const project = createProject();
+        projectList.add(project);
         localSave.set("projects", projectList.get());
-        projectSelector.set(0);
-        localSave.set("selector", 0);
+        projectSelector.set(projectList.get(), project);
+        localSave.set("selector", projectSelector.get());
+        appendProject(projectList, project);
     } else {
+        // Gets project list from local stroage
         const localList = localSave.get("projects");
         for (const project of localList) {
             projectList.add(project);
@@ -64,3 +69,4 @@ const checkLocalProjectList = (() => {
 const todo = (title, description, dueDate, priority, notes, checklist) => {
     return {title, description, dueDate, priority, notes, checklist};
 };
+
