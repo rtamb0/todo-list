@@ -1,21 +1,24 @@
 const projects = (() => {
     const list = [];
     const getList = () => {
-        return list;
-    }
+        return list.slice(0);
+    };
+    const addToList = (project) => {
+        list.push(project);
+    };
 
     let selector;
     const changeSelector = (n) => {
         selector = n;
     };
 
-    return {getList, add, changeSelector};
+    return {getList, addToList, changeSelector};
 })();
 
 
 const checkLocalProjectList = () => {
     if (!localStorage.getItem("projects")) {
-        projects.add(createProject());
+        projects.addToList(createProject());
         projects.changeSelector(0);
         localStorage("set", projects.getList());
     } else {
