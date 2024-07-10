@@ -24,14 +24,16 @@ const checkLocalProjectList = () => {
         localStorage("set", "projects", projects.getList());
         projects.changeSelector(0);
     } else {
-        //Gets the projects from the local storage and then append it to the page
+        //Gets the projects from the local storage and then append it to the pag
+        
     }
 
 }
 
 const localStorage = (mode, key, item) => {
     if (mode === "get") {
-        return localStorage.getItem(key, JSON.parse(item));
+        const get = localStorage.getItem(key);
+        return JSON.parse(get);
     } else if (mode === "set") {
         localStorage.setItem(key, JSON.stringify(item));
     }
