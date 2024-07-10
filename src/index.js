@@ -1,21 +1,31 @@
-const projects = (() => {
+const projectList = (() => {
     const list = [];
 
-    const getList = () => {
+    const get = () => {
         return list.slice(0);
     };
 
-    const addToList = (project) => {
+    const add = (project) => {
         list.push(project);
     };
 
+    return {get, add};
+})();
+
+const projectSelector = (() => {
     let selector;
-    const changeSelector = (n) => {
+
+    const set = (n) => {
         selector = n;
     };
 
-    return {getList, addToList, changeSelector};
-})();
+    const get = () => {
+        const getSelector = selector;
+        return getSelector;
+    };
+
+    return (set, get);
+})
 
 const createProject = () => {
     const project = [];
@@ -35,13 +45,13 @@ const checkLocalProjectList = () => {
     if (!localStorage.getItem("projects")) {
         // Creates new default project and saves it locally
         projects.addToList(createProject());
-        localStorage("set", "projects", projects.getList());
-        projects.changeSelector(0);
+        localStorage("set", "projects", projectList.get());
+        projectSelector.get(0);
         localStorage('set', 'selector', 0);
     } else {
         const localList = localStorage('get', 'projects');
         for (const project of localList) {
-            projects.addToList(project);
+            projectList.add(project);
         };
     };
 }
