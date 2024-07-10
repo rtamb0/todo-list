@@ -4,7 +4,7 @@ const projects = (() => {
     const getList = () => {
         return list.slice(0);
     };
-    
+
     const addToList = (project) => {
         list.push(project);
     };
@@ -21,19 +21,19 @@ const projects = (() => {
 const checkLocalProjectList = () => {
     if (!localStorage.getItem("projects")) {
         projects.addToList(createProject());
+        localStorage("set", "projects", projects.getList());
         projects.changeSelector(0);
-        localStorage("set", projects.getList());
     } else {
         //Gets the projects from the local storage and then append it to the page
     }
 
 }
 
-const localStorage = (mode, item) => {
+const localStorage = (mode, key, item) => {
     if (mode === "get") {
-        return localStorage.getItem(item, JSON.parse(item));
+        return localStorage.getItem(key, JSON.parse(item));
     } else if (mode === "set") {
-        localStorage.setItem(item, JSON.stringify(item));
+        localStorage.setItem(key, JSON.stringify(item));
     }
 }
 
