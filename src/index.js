@@ -37,6 +37,7 @@ const localSave = (() => {
         const item = localStorage.getItem(key);
         return JSON.parse(item);
     }
+
     const set = (key, item) => {
         localStorage.setItem(key, JSON.stringify(item));
     }
@@ -49,13 +50,14 @@ const checkLocalProjectList = () => {
         // Creates new default project and saves it locally
         projects.addToList(createProject());
         localSave.set("projects", projectList.get());
-        projectSelector.get(0);
-        localSave.set('selector', 0);
+        projectSelector.set(0);
+        localSave.set("selector", 0);
     } else {
         const localList = localSave.get("projects");
         for (const project of localList) {
             projectList.add(project);
         };
+        projectSelector.set(localSave.get("selector"));
     };
 };
 
