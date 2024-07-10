@@ -17,17 +17,9 @@ const projects = (() => {
     return {getList, addToList, changeSelector};
 })();
 
-
-const checkLocalProjectList = () => {
-    if (!localStorage.getItem("projects")) {
-        projects.addToList(createProject());
-        localStorage("set", "projects", projects.getList());
-        projects.changeSelector(0);
-    } else {
-        //Gets the projects from the local storage and then append it to the pag
-        
-    }
-
+const createProject = () => {
+    const project = [];
+    return project;
 }
 
 const localStorage = (mode, key, item) => {
@@ -39,11 +31,20 @@ const localStorage = (mode, key, item) => {
     }
 }
 
-const createProject = () => {
-    const project = [];
-    return project;
+const checkLocalProjectList = () => {
+    if (!localStorage.getItem("projects")) {
+        // Creates new default project and saves it locally
+        projects.addToList(createProject());
+        localStorage("set", "projects", projects.getList());
+        projects.changeSelector(0);
+        localStorage('set', 'selector', 0);
+    } else {
+        const localList = localStorage('get', 'projects');
+        for (const project of localList) {
+            projects.addToList(project);
+        };
+    };
 }
-
 
 const todo = (title, description, dueDate, priority, notes, checklist) => {
     return {title, description, dueDate, priority, notes, checklist};
