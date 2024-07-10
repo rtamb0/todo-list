@@ -31,7 +31,9 @@ const projectSelector = (() => {
 
 const createProject = () => {
     const project = [];
-    return project;
+    projectList.add(project);
+    const projectGet = project;
+    return projectGet;
 };
 
 const localSave = (() => {
@@ -51,7 +53,6 @@ const checkLocalProjectList = (() => {
     if (!localSave.get("projects")) {
         // Creates new default project and saves it locally
         const project = createProject();
-        projectList.add(project);
         localSave.set("projects", projectList.get());
         projectSelector.set(projectList.get(), project);
         localSave.set("selector", projectSelector.get());
