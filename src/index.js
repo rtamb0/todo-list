@@ -36,19 +36,19 @@ const localSave = (() => {
     const get = (key) => {
         const item = localStorage.getItem(key);
         return JSON.parse(item);
-    }
+    };
 
     const set = (key, item) => {
         localStorage.setItem(key, JSON.stringify(item));
-    }
+    };
 
     return {get, set};
 })();
 
-const checkLocalProjectList = () => {
+const checkLocalProjectList = (() => {
     if (!localSave.get("projects")) {
         // Creates new default project and saves it locally
-        projects.addToList(createProject());
+        projectList.add(createProject());
         localSave.set("projects", projectList.get());
         projectSelector.set(0);
         localSave.set("selector", 0);
@@ -59,7 +59,7 @@ const checkLocalProjectList = () => {
         };
         projectSelector.set(localSave.get("selector"));
     };
-};
+})();
 
 const todo = (title, description, dueDate, priority, notes, checklist) => {
     return {title, description, dueDate, priority, notes, checklist};
