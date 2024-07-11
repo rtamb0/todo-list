@@ -79,3 +79,21 @@ const checkLocalProjectList = (() => {
 const todo = (title, description, dueDate, priority, notes, checklist) => {
     return {title, description, dueDate, priority, notes, checklist};
 };
+
+const createTodo = () => {
+    const title = prompt("What do you want to call this to-do?");
+    const description = prompt("What is it about?");
+    const dueDate = prompt("When is it due?");
+    const priority = prompt("How important is it?");
+    const notes = prompt("Any notes to add?");
+    const checklist = prompt("Is it done?");
+
+    const todoList = todo(title, description, dueDate, priority, notes, checklist);
+
+    projectList.addTodoToCurrentProject(todoList);
+
+    // Need to make the code below simpler
+    console.log(projectList.get()[projectSelector.get()].find((list) => list === todoList));
+};
+
+createTodo();
