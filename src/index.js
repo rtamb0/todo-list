@@ -46,16 +46,20 @@ const projectSelector = (() => {
         selector = list.indexOf(project);
     };
 
+    const retrieve = (savedSelector) => {
+        selector = savedSelector;
+    };
+
     const get = () => {
         const getSelector = selector;
         return getSelector;
     };
 
-    return {set, get};
-});
+    return {set, retrieve, get};
+})();
 
 const checkLocalProjectList = (() => {
-    if (!localSave.get("projects")) {
+    if (localSave.get("projects") === null || localSave.get("projects") === undefined || localSave.get("selector") === null || localSave.get("selector") === undefined) {
         // Creates new default project and saves it locally
         const project = createProject();
         localSave.set("projects", projectList.get());
@@ -66,9 +70,9 @@ const checkLocalProjectList = (() => {
         // Gets project list from local stroage
         const localList = localSave.get("projects");
         for (const project of localList) {
-            projectList.add(project);
+            projectList.addProject(project);
         };
-        projectSelector.set(localSave.get("selector"));
+        projectSelector.retrieve(localSave.get("selector"));
     };
 })();
 
