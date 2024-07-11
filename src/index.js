@@ -7,31 +7,21 @@ const projectList = (() => {
         return list.slice(0);
     };
 
-    const add = (project) => {
+    const addProject = (project) => {
         list.push(project);
     };
 
-    return {get, add};
+    const addTodoToCurrentProject = (todo) => {
+        const currentProject = projectSelector.get();
+        list[currentProject].push(todo);
+    };
+
+    return {get, addProject, addTodoToCurrentProject};
 })();
-
-const projectSelector = (() => {
-    let selector;
-
-    const set = (list, project) => {
-        selector = list.indexOf(project);
-    };
-
-    const get = () => {
-        const getSelector = selector;
-        return getSelector;
-    };
-
-    return (set, get);
-});
 
 const createProject = () => {
     const project = [];
-    projectList.add(project);
+    projectList.addProject(project);
     const projectGet = project;
     return projectGet;
 };
@@ -48,6 +38,21 @@ const localSave = (() => {
 
     return {get, set};
 })();
+
+const projectSelector = (() => {
+    let selector;
+
+    const set = (list, project) => {
+        selector = list.indexOf(project);
+    };
+
+    const get = () => {
+        const getSelector = selector;
+        return getSelector;
+    };
+
+    return {set, get};
+});
 
 const checkLocalProjectList = (() => {
     if (!localSave.get("projects")) {
@@ -70,4 +75,3 @@ const checkLocalProjectList = (() => {
 const todo = (title, description, dueDate, priority, notes, checklist) => {
     return {title, description, dueDate, priority, notes, checklist};
 };
-
