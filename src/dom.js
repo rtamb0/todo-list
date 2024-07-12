@@ -24,13 +24,13 @@ const appendProject= (project) => {
 };
 
 // function that loops through all of the projects and if it does not match the selector value then displays the currently selected project
-// const setActiveProject = (list, selector) => {
-//     for (project of list) {
-//         if (!(project === selector)) {
-            
-//         }
-//     }
-// };
+const appendActiveProject = (list, activeProject) => {
+    for (project in list) {
+        if (project === activeProject) {
+            appendProject(activeProject);
+        };
+    };
+};
 
 const appendTodo = (project, todo) => {
     const todoCard = document.createElement('li');
