@@ -8,7 +8,8 @@ const projectList = (() => {
     };
 
     const getCurrentProject = () => {
-        return list[projectSelector.get()].slice(0);
+        const currentProject = projectSelector.get();
+        return list[currentProject].slice(0);
     };
 
     const addProject = (project) => {
