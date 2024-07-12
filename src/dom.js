@@ -8,18 +8,29 @@ const querySelectors = (() => {
     return (body, section, projectDiv);
 })();
 
-const linkIndex = (list, item, element) => {
-    element.setAttribute('data-index', list.indexOf(item));
+const linkIndex = (arr, item, element) => {
+    element.setAttribute('data-index', arr.indexOf(item));
 };
 
-const appendProject= (list, project) => {
+const appendProject= (project) => {
     const todoList = document.createElement('ul');
     todoList.className = 'todo-list';
     querySelectors.projectDiv.appendChild(todoList);
-    linkIndex(list, project, todoList);
+    if (project.length > 0) {
+        for (todo in project) {
+            appendTodo(project, todo);
+        };
+    };
 };
 
-// function that loops through all of the projects and if it does not match the selector value then it would hide it
+// function that loops through all of the projects and if it does not match the selector value then displays the currently selected project
+// const setActiveProject = (list, selector) => {
+//     for (project of list) {
+//         if (!(project === selector)) {
+            
+//         }
+//     }
+// };
 
 const appendTodo = (project, todo) => {
     const todoCard = document.createElement('li');
