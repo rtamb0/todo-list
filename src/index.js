@@ -7,6 +7,10 @@ const projectList = (() => {
         return list.slice(0);
     };
 
+    const getCurrentProject = () => {
+        return list[projectSelector.get()].slice(0);
+    };
+
     const addProject = (project) => {
         list.push(project);
     };
@@ -16,7 +20,7 @@ const projectList = (() => {
         list[currentProject].push(todo);
     };
 
-    return {get, addProject, addTodoToCurrentProject};
+    return {get, getCurrentProject, addProject, addTodoToCurrentProject};
 })();
 
 const createProject = () => {
@@ -93,7 +97,7 @@ const createTodo = () => {
     projectList.addTodoToCurrentProject(todoList);
 
     // Need to make the code below simpler
-    console.log(projectList.get()[projectSelector.get()].find((list) => list === todoList));
+    console.log(projectList.getCurrentProject().find((list) => list === todoList));
 };
 
 createTodo();
