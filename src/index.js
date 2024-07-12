@@ -70,7 +70,7 @@ const checkLocalProjectList = (() => {
         localSave.set("projects", projectList.get());
         projectSelector.set(projectList.get(), project);
         localSave.set("selector", projectSelector.get());
-        appendProject(projectList, project);
+        appendProject(projectList.getCurrentProject());
     } else {
         // Gets project list from local stroage
         const localList = localSave.get("projects");
