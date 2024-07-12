@@ -23,11 +23,11 @@ const appendProject= (project) => {
     };
 };
 
-// function that loops through all of the projects and if it does not match the selector value then displays the currently selected project
-const appendActiveProject = (list, activeProject) => {
+// function that loops through all of the projects and if it matches the selector value then displays the selected project from previous session
+const appendPreviousSelectedProject = (list, selectedProject) => {
     for (project in list) {
-        if (project === activeProject) {
-            appendProject(activeProject);
+        if (project === selectedProject) {
+            appendProject(selectedProject);
         };
     };
 };
