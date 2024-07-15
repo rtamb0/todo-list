@@ -8,10 +8,6 @@ const querySelectors = (() => {
     return {body, section, projectDiv};
 })();
 
-const linkIndex = (arr, item, element) => {
-    element.setAttribute('data-index', arr.indexOf(item));
-};
-
 const appendProject= (project) => {
     const todoList = document.createElement('ul');
     todoList.className = 'todo-list';
@@ -32,12 +28,44 @@ const appendPreviousSelectedProject = (list, selectedProject) => {
     };
 };
 
+const linkIndex = (arr, item, element) => {
+    element.setAttribute('data-index', arr.indexOf(item));
+};
 
+const appendTodo = (project, todo) => {
+    const todoCard = document.createElement('li');
+
+    const title = document.createElement('h3');
+    title.innerHTML = todo.title;
+    todoCard.appendChild(title);
+
+    const description = document.createElement('p');
+    description.innerHTML = todo.description;
+    todoCard.appendChild(description);
+
+    const dueDate = document.createElement('p');
+    dueDate.innerHTML = todo.dueDate;
+    todoCard.appendChild(dueDate);
+
+    const notes = document.createElement('h5');
+    notes.innerHTML = todo.notes;
+    todoCard.appendChild(notes);
+
+    const checklist = document.createElement('button');
+    checklist.innerHTML = todo.checklist;
+    todoCard.appendChild(checklist);
+
+    const todoList = document.querySelector('.todo-list');
+    todoList.appendChild(todoCard);
+
+    linkIndex(project, todo, todoCard);
+};
 
 const todoInputs = (function() {
     const placeholderText = (text, input) => {
         input.setAttribute('placeholder', text);
-    }
+    };
+
     const content = (name, type) => {
         let label;
         if (type !== 'submit') {
@@ -101,34 +129,5 @@ const todoInputs = (function() {
     
     return {content};
 })();
-
-const appendTodo = (project, todo) => {
-    const todoCard = document.createElement('li');
-
-    const title = document.createElement('h3');
-    title.innerHTML = todo.title;
-    todoCard.appendChild(title);
-
-    const description = document.createElement('p');
-    description.innerHTML = todo.description;
-    todoCard.appendChild(description);
-
-    const dueDate = document.createElement('p');
-    dueDate.innerHTML = todo.dueDate;
-    todoCard.appendChild(dueDate);
-
-    const notes = document.createElement('h5');
-    notes.innerHTML = todo.notes;
-    todoCard.appendChild(notes);
-
-    const checklist = document.createElement('button');
-    checklist.innerHTML = todo.checklist;
-    todoCard.appendChild(checklist);
-
-    const todoList = document.querySelector('.todo-list');
-    todoList.appendChild(todoCard);
-
-    linkIndex(project, todo, todoCard);
-};
 
 export {appendProject, appendPreviousSelectedProject};
