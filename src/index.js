@@ -1,4 +1,4 @@
-import { appendProject } from "./dom";
+import { appendProject , appendPreviousSelectedProject } from "./dom";
 
 const projectList = (() => {
     const list = [];
@@ -78,6 +78,7 @@ const checkLocalProjectList = (() => {
             projectList.addProject(project);
         };
         projectSelector.retrieve(localSave.get("selector"));
+        appendPreviousSelectedProject(projectList.getCurrentProject());
     };
 })();
 
@@ -100,5 +101,3 @@ const createTodo = () => {
     // Need to make the code below simpler
     console.log(projectList.getCurrentProject().find((list) => list === todoList));
 };
-
-createTodo();
