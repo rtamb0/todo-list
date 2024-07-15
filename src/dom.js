@@ -34,13 +34,11 @@ const appendPreviousSelectedProject = (list, selectedProject) => {
 
 
 
-const todoInputs = {
-    // Creates the placeholder text for the inputs
-    placeholderText: function(text, input) {
+const todoInputs = (function() {
+    const placeholderText = (text, input) => {
         input.setAttribute('placeholder', text);
-    },
-    // Creates the inputs
-    content: function(name, type) {
+    }
+    const content = (name, type) => {
         let label;
         if (type !== 'submit') {
             label = document.createElement('label');
@@ -99,8 +97,10 @@ const todoInputs = {
         section.className = name.toLowerCase().split(" ").join("");
         
         return section;
-    }
-};
+    };
+    
+    return {content};
+})();
 
 const appendTodo = (project, todo) => {
     const todoCard = document.createElement('li');
