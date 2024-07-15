@@ -5,7 +5,7 @@ const querySelectors = (() => {
 
     const projectDiv = document.querySelector('.project');
 
-    return (body, section, projectDiv);
+    return {body, section, projectDiv};
 })();
 
 const linkIndex = (arr, item, element) => {
