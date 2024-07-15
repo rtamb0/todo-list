@@ -61,4 +61,4 @@ const appendTodo = (project, todo) => {
     linkIndex(project, todo, todoCard);
 };
 
-export {appendProject};
+export {appendProject, appendPreviousSelectedProject};
