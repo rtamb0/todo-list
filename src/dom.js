@@ -5,7 +5,11 @@ const querySelectors = (() => {
 
     const projectDiv = document.querySelector('.project');
 
-    return {body, section, projectDiv};
+    const dialog = document.querySelector('#createTodo');
+
+    const form = document.querySelector('#todoForm');
+
+    return {body, section, projectDiv, dialog, form};
 })();
 
 const appendProject= (project) => {
