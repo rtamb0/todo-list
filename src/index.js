@@ -1,4 +1,4 @@
-import { appendProject , appendPreviousSelectedProject } from "./dom";
+import { appendProject , appendPreviousSelectedProject, startUp } from "./dom";
 
 const projectList = (() => {
     const list = [];
@@ -24,8 +24,9 @@ const projectList = (() => {
     return {get, getCurrentProject, addProject, addTodoToCurrentProject};
 })();
 
-const createProject = () => {
-    const project = [];
+const createProject = (name) => {
+    const project = {};
+    project.name = name;
     projectList.addProject(project);
     const projectGet = project;
     return projectGet;
