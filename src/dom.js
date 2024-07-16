@@ -7,7 +7,9 @@ const querySelectors = (() => {
 
     const startUpDialog = document.querySelector('#startupInput');
 
-    const startUpForm = document.querySelector('#startup');
+    const startUpInput = document.querySelector('#startup input[type="text"]');
+
+    const startUpButton = document.querySelector('#startup input[type="button"]');
 
     const todoDialog = document.querySelector('#createTodo');
 
@@ -15,7 +17,7 @@ const querySelectors = (() => {
 
     const sideBar = document.querySelector('#projectList');
 
-    return {body, section, projectDiv, startUpDialog, startUpForm, todoDialog, todoForm, sideBar};
+    return {body, section, projectDiv, startUpDialog, startUpInput, startUpButton, todoDialog, todoForm, sideBar};
 })();
 
 const appendProject= (project) => {
