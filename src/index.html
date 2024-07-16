@@ -8,7 +8,45 @@
 <body>
     <header></header>
     <section>
-        <div class="project"></div>
+        <div class="project">
+            <dialog id="todo">
+                <h3>Create your to-do here!</h3>
+                <h5>Mandatory fields will be marked by *</h5>
+                <form method="dialog">
+                    <ul>
+                        <li>
+                            <label for="title">Title</label>
+                            <input type="text" id="title" name="title" placeholder="E.g. Taking the bin out, do my homeworks, etc" required>
+                        </li>
+                        <li>
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" cols="30" rows="10" placeholder="Details of your to-dos (optional)"></textarea>
+                        </li>
+                        <li>
+                            <label for="duedate">Due Date</label>
+                            <input type="date" name="duedate" id="duedate" required>
+                        </li>
+                        <li>
+                            <label for="priority">Priority</label>
+                            <input type="range" name="priority" id="priority" list="prioritylevel" required>
+                            <datalist id="prioritylevel">
+                                <option value="0">Low</option>
+                                <option value="1">Mid</option>
+                                <option value="2">High</option>
+                            </datalist>
+                        </li>
+                        <li>
+                            <label for="notes">Notes</label>
+                            <input type="text" name="notes" id="notes" placeholder="Add any additional information on here...">
+                        </li>
+                        <li>
+                            <label for="checklist">Is it done?</label>
+                            <input type="checkbox" name="checklist" id="checklist">
+                        </li>
+                    </ul>
+                </form>
+            </dialog>
+        </div>
     </section>
 </body>
 </html>
