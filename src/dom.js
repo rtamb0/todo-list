@@ -67,49 +67,6 @@ const appendTodo = (project, todo) => {
     linkIndex(project, todo, todoCard);
 };
 
-const startUp = (() => {
-    let value;
-    const start = () => {
-        const startUpForm = document.createElement('form');
-        startUpForm.className = "startup";
-    
-        const inputContainer = document.createElement('div');
-        inputContainer.className = 'startupInput'
-    
-        const textLabel = document.createElement('label');
-        textInput.setAttribute('for', 'firstproject');
-        inputContainer.appendChild(textLabel);
-    
-        const textInput = document.createElement('input');
-        textInput.setAttribute('type', 'text');
-        textInput.setAttribute('name', 'firstproject');
-        textInput.setAttribute('id', 'firstproject');
-        textInput.setAttribute('required', '');
-        inputContainer.appendChild(textInput);
-    
-        startUpForm.appendChild(inputContainer);
-    
-        const confirmButton = document.createElement('input');
-        confirmButton.setAttribute('type', 'button');
-        confirmButton.setAttribute('value', 'Create new project');
-        confirmButton.setAttribute('onclick', `${() => {
-            if (textInput.value !== "") {
-                value = textInput.value;
-                while (startUpForm.firstElementChild !== "") startUpForm.removeChild(startUpForm.firstElementChild);
-            };
-        }}`);
-        startUpForm.appendChild(confirmButton);
-    
-        querySelectors.body.insertBefore(startUpForm, querySelectors.section);  
-    }
-    const get = () => {
-        const getValue = value;
-        return getValue;
-    };
-
-    return {start, get};
-})();
-
-export {appendProject, appendPreviousSelectedProject, startUp };
+export {appendProject, appendPreviousSelectedProject, startUp};
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
