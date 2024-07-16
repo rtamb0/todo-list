@@ -110,6 +110,6 @@ const startUp = (() => {
     return {start, get};
 })();
 
-export {appendProject, appendPreviousSelectedProject, startUp.start, };
+export {appendProject, appendPreviousSelectedProject, startUp };
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
