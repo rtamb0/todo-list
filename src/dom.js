@@ -9,7 +9,9 @@ const querySelectors = (() => {
 
     const form = document.querySelector('#todoForm');
 
-    return {body, section, projectDiv, dialog, form};
+    const sideBar = document.querySelector('#projectList');
+
+    return {body, section, projectDiv, dialog, form, sideBar};
 })();
 
 const appendProject= (project) => {
