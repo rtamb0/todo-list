@@ -5,13 +5,17 @@ const querySelectors = (() => {
 
     const projectDiv = document.querySelector('.project');
 
-    const dialog = document.querySelector('#createTodo');
+    const startUpDialog = document.querySelector('#startupInput');
 
-    const form = document.querySelector('#todoForm');
+    const startUpForm = document.querySelector('#startup');
+
+    const todoDialog = document.querySelector('#createTodo');
+
+    const todoForm = document.querySelector('#todoForm');
 
     const sideBar = document.querySelector('#projectList');
 
-    return {body, section, projectDiv, dialog, form, sideBar};
+    return {body, section, projectDiv, startUpDialog, startUpForm, todoDialog, todoForm, sideBar};
 })();
 
 const appendProject= (project) => {
@@ -67,6 +71,6 @@ const appendTodo = (project, todo) => {
     linkIndex(project, todo, todoCard);
 };
 
-export {appendProject, appendPreviousSelectedProject, startUp};
+export {appendProject, appendPreviousSelectedProject};
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
