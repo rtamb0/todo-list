@@ -73,6 +73,28 @@ const appendTodo = (project, todo) => {
     linkIndex(project, todo, todoCard);
 };
 
-export {appendProject, appendPreviousSelectedProject};
+const startUp = (() => {
+    const dialog = querySelectors.todoDialog;
+    const input = querySelectors.startUpInput;
+    const button = querySelectors.startUpButton;
+
+    const show = () => {
+        dialog.show();
+    };
+
+    const buttonListener = (constructor) => {
+        button.addEventListener('click', () => {
+            if (input.checkValidity() === true){
+                dialog.close();
+                const name = input.value;
+                constructor(name);
+            };
+        });
+    };
+    
+    return {show, buttonListener};
+})();
+
+export {appendProject, appendPreviousSelectedProject, startUp};
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
