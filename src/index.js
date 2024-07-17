@@ -69,7 +69,7 @@ const projectSelector = (() => {
 const checkLocalProjectList = (() => {
     if (localSave.get("projects") === null || localSave.get("projects") === undefined || localSave.get("selector") === null || localSave.get("selector") === undefined) {
         // Creates new default project and saves it locally
-        startUp.show(projectList.addProject, projectSelector.set);
+        startUp.show(createProject, projectSelector.set);
     } else {
         // Gets project list from local stroage
         const localList = localSave.get("projects");
@@ -83,20 +83,4 @@ const checkLocalProjectList = (() => {
 
 const todo = (title, description, dueDate, priority, notes, checklist) => {
     return {title, description, dueDate, priority, notes, checklist};
-};
-
-const createTodo = () => {
-    const title = prompt("What do you want to call this to-do?");
-    const description = prompt("What is it about?");
-    const dueDate = prompt("When is it due?");
-    const priority = prompt("How important is it?");
-    const notes = prompt("Any notes to add?");
-    const checklist = prompt("Is it done?");
-
-    const todoList = todo(title, description, dueDate, priority, notes, checklist);
-
-    projectList.addTodoToCurrentProject(todoList);
-
-    // Need to make the code below simpler
-    console.log(projectList.getCurrentProject().find((list) => list === todoList));
 };
