@@ -32,7 +32,7 @@ const appendProject= (project) => {
 };
 
 const appendSelectedProject = (list, selectedProject) => {
-    for (project in list) {
+    for (const project in list) {
         if (project === selectedProject) {
             appendProject(selectedProject);
         };
