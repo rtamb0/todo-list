@@ -25,14 +25,14 @@ const appendProject= (project) => {
     todoList.className = 'todo-list';
     querySelectors.projectDiv.appendChild(todoList);
     if (project.todos.length > 0) {
-        for (todo in project.todos) {
+        for (todo of project.todos) {
             appendTodo(project, todo);
         };
     };
 };
 
 const appendSelectedProject = (list, selectedProject) => {
-    for (const project in list) {
+    for (const project of list) {
         if (project === selectedProject) {
             appendProject(selectedProject);
         };
