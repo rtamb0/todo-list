@@ -73,7 +73,7 @@ const appendTodo = (project, todo) => {
 };
 
 const startUp = (() => {
-    const dialog = querySelectors.todoDialog;
+    const dialog = querySelectors.startUpDialog;
     const input = querySelectors.startUpInput;
     const button = querySelectors.startUpButton;
 
