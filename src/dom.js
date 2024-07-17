@@ -79,7 +79,7 @@ const startUp = (() => {
 
     const show = (constructor, selector) => {
         dialog.show();
-        buttonListener(constructor, selector, append);
+        buttonListener(constructor, selector);
     };
 
     const buttonListener = (constructor, selector) => {
