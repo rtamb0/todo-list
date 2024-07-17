@@ -24,8 +24,8 @@ const appendProject= (project) => {
     const todoList = document.createElement('ul');
     todoList.className = 'todo-list';
     querySelectors.projectDiv.appendChild(todoList);
-    if (project.length > 0) {
-        for (todo in project) {
+    if (project.todos.length > 0) {
+        for (todo in project.todos) {
             appendTodo(project, todo);
         };
     };

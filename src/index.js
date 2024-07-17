@@ -8,8 +8,8 @@ const projectList = (() => {
     };
 
     const getCurrentProject = () => {
-        const currentProject = projectSelector.get();
-        return list[currentProject].slice(0);
+        const currentProject = list[projectSelector.get()];
+        return currentProject;
     };
 
     const addProject = (project) => {
@@ -28,6 +28,7 @@ const projectList = (() => {
 const createProject = (name) => {
     const project = {};
     project.name = name;
+    project.todos = [];
     projectList.addProject(project);
     const projectGet = project;
     return projectGet;
