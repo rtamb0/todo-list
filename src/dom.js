@@ -20,7 +20,15 @@ const querySelectors = (() => {
     return {body, section, projectDiv, startUpDialog, startUpInput, startUpButton, todoDialog, todoForm, sideBar};
 })();
 
-const appendProject= (project) => {
+const appendList = (list) => {
+    for (const project of list) {
+        const projectName = document.createElement('li');
+        projectName.innerHTML = project.name;
+        querySelectors.sideBar.appendChild(projectName);
+    };
+};
+
+const appendProject = (project) => {
     const todoList = document.createElement('ul');
     todoList.className = 'todo-list';
     querySelectors.projectDiv.appendChild(todoList);
@@ -77,18 +85,19 @@ const startUp = (() => {
     const input = querySelectors.startUpInput;
     const button = querySelectors.startUpButton;
 
-    const show = (constructor, selector) => {
+    const show = (constructor, selector, list) => {
         dialog.show();
-        buttonListener(constructor, selector);
+        buttonListener(constructor, selector, list);
     };
 
-    const buttonListener = (constructor, selector) => {
+    const buttonListener = (constructor, selector, getList) => {
         button.addEventListener('click', () => {
             if (input.checkValidity() === true){
                 dialog.close();
                 const project = constructor(input.value)
                 selector(project);
                 appendProject(project);
+                appendList(getList());
             };
         });
     };
@@ -96,6 +105,6 @@ const startUp = (() => {
     return {show, buttonListener};
 })();
 
-export {appendProject, appendSelectedProject, startUp};
+export {appendProject, appendSelectedProject, startUp, appendList};
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
