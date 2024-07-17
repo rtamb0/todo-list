@@ -78,16 +78,18 @@ const startUp = (() => {
     const input = querySelectors.startUpInput;
     const button = querySelectors.startUpButton;
 
-    const show = () => {
+    const show = (constructor, selector) => {
         dialog.show();
+        buttonListener(constructor, selector, append);
     };
 
-    const buttonListener = (constructor) => {
+    const buttonListener = (constructor, selector) => {
         button.addEventListener('click', () => {
             if (input.checkValidity() === true){
                 dialog.close();
-                const name = input.value;
-                constructor(name);
+                const project = constructor(input.value)
+                selector(project);
+                appendProject(project);
             };
         });
     };

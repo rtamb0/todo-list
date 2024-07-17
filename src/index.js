@@ -1,4 +1,4 @@
-import { appendProject , appendPreviousSelectedProject, startUp } from "./dom";
+import { appendPreviousSelectedProject, startUp } from "./dom";
 
 const projectList = (() => {
     const list = [];
@@ -14,6 +14,7 @@ const projectList = (() => {
 
     const addProject = (project) => {
         list.push(project);
+        localSave.set('projects', list);
     };
 
     const addTodoToCurrentProject = (todo) => {
@@ -48,8 +49,9 @@ const localSave = (() => {
 const projectSelector = (() => {
     let selector;
 
-    const set = (list, project) => {
-        selector = list.indexOf(project);
+    const set = (project) => {
+        selector = projectList.get().indexOf(project);
+        localSave.set("selector", selector);
     };
 
     const retrieve = (savedSelector) => {
@@ -67,11 +69,7 @@ const projectSelector = (() => {
 const checkLocalProjectList = (() => {
     if (localSave.get("projects") === null || localSave.get("projects") === undefined || localSave.get("selector") === null || localSave.get("selector") === undefined) {
         // Creates new default project and saves it locally
-        const project = createProject();
-        localSave.set("projects", projectList.get());
-        projectSelector.set(projectList.get(), project);
-        localSave.set("selector", projectSelector.get());
-        appendProject(projectList.getCurrentProject());
+        startUp.show(projectList.addProject, projectSelector.set);
     } else {
         // Gets project list from local stroage
         const localList = localSave.get("projects");
