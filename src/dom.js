@@ -31,8 +31,7 @@ const appendProject= (project) => {
     };
 };
 
-// function that loops through all of the projects and if it matches the selector value then displays the selected project from previous session
-const appendPreviousSelectedProject = (list, selectedProject) => {
+const appendSelectedProject = (list, selectedProject) => {
     for (project in list) {
         if (project === selectedProject) {
             appendProject(selectedProject);
@@ -97,6 +96,6 @@ const startUp = (() => {
     return {show, buttonListener};
 })();
 
-export {appendProject, appendPreviousSelectedProject, startUp};
+export {appendProject, appendSelectedProject, startUp};
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
