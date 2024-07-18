@@ -37,8 +37,8 @@ const appendProject = (project) => {
     todoList.className = 'todo-list';
     querySelectors.projectDiv.appendChild(todoList);
     if (project.todos.length > 0) {
-        for (todo of project.todos) {
-            appendTodo(project, todo);
+        for (const todo of project.todos) {
+            appendTodo(todo, project.todos);
         };
     };
 };
@@ -125,6 +125,7 @@ const todoForm = (() => {
 
     const formListener = (constructor, project) => {
         form.addEventListener('submit', () => {
+            const currentProject = project();
             const inputs = document.querySelectorAll('#todoForm input');
             const textArea = document.querySelector('#todoForm textarea');
             const values = [];
@@ -140,7 +141,7 @@ const todoForm = (() => {
             values.splice(1 ,0, textArea.value);
             const todo = constructor.apply(null, values);
             console.log(todo);
-            appendTodo(todo, project().todos);
+            appendTodo(todo, currentProject.todos);
             closeDialog();
         });
 
