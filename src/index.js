@@ -1,4 +1,4 @@
-import { appendSelectedProject, startUp, appendList } from "./dom";
+import { appendSelectedProject, startUp, appendList, todoForm } from "./dom";
 
 const projectList = (() => {
     const list = [];
@@ -20,6 +20,7 @@ const projectList = (() => {
     const addTodoToCurrentProject = (todo) => {
         const currentProject = projectSelector.get();
         list[currentProject].todos.push(todo);
+        localSave.set('projects', list);
     };
 
     return {get, getCurrentProject, addProject, addTodoToCurrentProject};
@@ -84,6 +85,9 @@ const checkLocalProjectList = (() => {
 })();
 
 const createTodo = (title, description, dueDate, priority, notes, checklist) => {
+    const todo = {title, description, dueDate, priority, notes, checklist}
     projectList.addTodoToCurrentProject(todo);
-    return {title, description, dueDate, priority, notes, checklist};
+    return todo;
 };
+
+todoForm.show(createTodo, projectList.getCurrentProject);
