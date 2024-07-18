@@ -100,7 +100,7 @@ const startUp = (() => {
             selector(project);
             appendProject(project);
             appendList(getList());
-        });
+        }, { once: true });
     };
     
     return {show};
@@ -124,7 +124,7 @@ const todoForm = (() => {
     };
 
     const formListener = (constructor, project) => {
-        form.addEventListener('submit', () => {
+        const listener = form.addEventListener('submit', () => {
             const currentProject = project();
             const inputs = document.querySelectorAll('#todoForm input');
             const textArea = document.querySelector('#todoForm textarea');
@@ -140,14 +140,14 @@ const todoForm = (() => {
             };
             values.splice(1 ,0, textArea.value);
             const todo = constructor.apply(null, values);
-            console.log(todo);
             appendTodo(todo, currentProject.todos);
             closeDialog();
-        });
+        }, { once: true });
 
         cancelButton.addEventListener('click', () => {
             closeDialog();
-        })
+            form.removeEventListener('click', listener);
+        }, { once: true });
     };
 
     const closeDialog = () => {
