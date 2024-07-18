@@ -9,15 +9,19 @@ const querySelectors = (() => {
 
     const startUpInput = document.querySelector('#startup input[type="text"]');
 
-    const startUpButton = document.querySelector('#startup input[type="button"]');
+    const startUpForm = document.querySelector('#startup');
+
+    const todoCreate = document.querySelector('#makeTodo')
 
     const todoDialog = document.querySelector('#createTodo');
 
     const todoForm = document.querySelector('#todoForm');
 
+    const todoCancel = document.querySelector('#cancelTodo');
+
     const sideBar = document.querySelector('#projectList');
 
-    return {body, section, projectDiv, startUpDialog, startUpInput, startUpButton, todoDialog, todoForm, sideBar};
+    return {body, section, projectDiv, startUpDialog, startUpInput, startUpForm, todoCreate, todoDialog, todoForm, todoCancel, sideBar};
 })();
 
 const appendList = (list) => {
@@ -51,7 +55,7 @@ const linkIndex = (arr, item, element) => {
     element.setAttribute('data-index', arr.indexOf(item));
 };
 
-const appendTodo = (project, todo) => {
+const appendTodo = (todo, project) => {
     const todoCard = document.createElement('li');
 
     const title = document.createElement('h3');
@@ -83,28 +87,76 @@ const appendTodo = (project, todo) => {
 const startUp = (() => {
     const dialog = querySelectors.startUpDialog;
     const input = querySelectors.startUpInput;
-    const button = querySelectors.startUpButton;
+    const form = querySelectors.startUpForm;
 
     const show = (constructor, selector, list) => {
-        dialog.show();
-        buttonListener(constructor, selector, list);
+        dialog.showModal();
+        formListener(constructor, selector, list);
     };
 
-    const buttonListener = (constructor, selector, getList) => {
-        button.addEventListener('click', () => {
-            if (input.checkValidity() === true){
-                dialog.close();
-                const project = constructor(input.value)
-                selector(project);
-                appendProject(project);
-                appendList(getList());
-            };
+    const formListener = (constructor, selector, getList) => {
+        form.addEventListener('submit', () => {
+            const project = constructor(input.value)
+            selector(project);
+            appendProject(project);
+            appendList(getList());
         });
     };
     
-    return {show, buttonListener};
+    return {show};
 })();
 
-export {appendProject, appendSelectedProject, startUp, appendList};
+const todoForm = (() => {
+    const dialog = querySelectors.todoDialog;
+    const form = querySelectors.todoForm;
+    const showButton = querySelectors.todoCreate;
+    const cancelButton = querySelectors.todoCancel;
+
+    const show = (constructor, project) => {
+        showButton.addEventListener('click', () => {
+            run(constructor, project);
+        });
+    };
+
+    const run = (constructor, project) => {
+        dialog.showModal();
+        formListener(constructor, project);
+    };
+
+    const formListener = (constructor, project) => {
+        form.addEventListener('submit', () => {
+            const inputs = document.querySelectorAll('#todoForm input');
+            const textArea = document.querySelector('#todoForm textarea');
+            const values = [];
+            for (const input of inputs) {
+                let value;
+                if (input.value === '') {
+                    value = '';
+                } else {
+                    value = input.value;
+                };
+                values.push(input.value);
+            };
+            values.splice(1 ,0, textArea.value);
+            const todo = constructor.apply(null, values);
+            console.log(todo);
+            appendTodo(todo, project().todos);
+            closeDialog();
+        });
+
+        cancelButton.addEventListener('click', () => {
+            closeDialog();
+        })
+    };
+
+    const closeDialog = () => {
+        dialog.close();
+        form.reset();
+    };
+
+    return {show};
+})();
+
+export {appendProject, appendSelectedProject, startUp, appendList, todoForm};
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
