@@ -19,7 +19,7 @@ const projectList = (() => {
 
     const addTodoToCurrentProject = (todo) => {
         const currentProject = projectSelector.get();
-        list[currentProject].push(todo);
+        list[currentProject].todos.push(todo);
     };
 
     return {get, getCurrentProject, addProject, addTodoToCurrentProject};
@@ -83,6 +83,7 @@ const checkLocalProjectList = (() => {
     };
 })();
 
-const todo = (title, description, dueDate, priority, notes, checklist) => {
+const createTodo = (title, description, dueDate, priority, notes, checklist) => {
+    projectList.addTodoToCurrentProject(todo);
     return {title, description, dueDate, priority, notes, checklist};
 };
