@@ -70,6 +70,16 @@ const appendTodo = (todo, project) => {
     dueDate.innerHTML = todo.dueDate;
     todoCard.appendChild(dueDate);
 
+    const priority = document.createElement('p');
+    if (todo.priority === '0') {
+        priority.innerHTML = "Low";
+    } else if (todo.priority === '1') {
+        priority.innerHTML = "Moderate";
+    } else if (todo.priority === '2') {
+        priority.innerHTML - "High";
+    };
+    todoCard.appendChild(priority);
+
     const notes = document.createElement('h5');
     notes.innerHTML = todo.notes;
     todoCard.appendChild(notes);
