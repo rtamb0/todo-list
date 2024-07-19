@@ -43,11 +43,11 @@
                         </li>
                         <li>
                             <label for="priority">Priority</label>
-                            <input type="range" name="priority" id="priority" list="prioritylevel" required>
+                            <input type="range" name="priority" id="priority" list="prioritylevel" min="0" max="2" required>
                             <datalist id="prioritylevel">
-                                <option value="0">Low</option>
-                                <option value="1">Mid</option>
-                                <option value="2">High</option>
+                                <option value="0" label="Low"></option>
+                                <option value="1" label="Mid"></option>
+                                <option value="2" label="High"></option>
                             </datalist>
                         </li>
                         <li>
