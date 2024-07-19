@@ -124,7 +124,10 @@ const todoForm = (() => {
     };
 
     const formListener = (constructor, project) => {
-        const listener = form.addEventListener('submit', () => {
+        const controller = new AbortController();
+        const { signal } = controller;
+
+        form.addEventListener('submit', () => {
             const currentProject = project();
             const inputs = document.querySelectorAll('#todoForm input');
             const textArea = document.querySelector('#todoForm textarea');
@@ -142,11 +145,11 @@ const todoForm = (() => {
             const todo = constructor.apply(null, values);
             appendTodo(todo, currentProject.todos);
             closeDialog();
-        }, { once: true });
+        }, { once: true, signal });
 
         cancelButton.addEventListener('click', () => {
             closeDialog();
-            form.removeEventListener('click', listener);
+            controller.abort();
         }, { once: true });
     };
 
