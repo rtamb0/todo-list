@@ -112,7 +112,7 @@ const todos = (() => {
                 
                 const priority2 = todos[j + 1].priority;
     
-                if (priority2 > priority1 || year1 > year2 || (year1 === year2 && month1 > month2) || (year1 === year2 && month1 === month2 && day1 > day2)) {
+                if (priority2 > priority1 || ((priority2 === priority1) && (year1 > year2 || (year1 === year2 && month1 > month2) || (year1 === year2 && month1 === month2 && day1 > day2)))) {
                     const temp = todos[j];
                     todos[j] = todos[j + 1];
                     todos[j + 1] = temp;
