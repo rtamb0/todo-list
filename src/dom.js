@@ -76,7 +76,7 @@ const appendTodo = (todo, project) => {
     } else if (todo.priority === '1') {
         priority.innerHTML = "Moderate";
     } else if (todo.priority === '2') {
-        priority.innerHTML - "High";
+        priority.innerHTML = "High";
     };
     todoCard.appendChild(priority);
 
@@ -92,6 +92,12 @@ const appendTodo = (todo, project) => {
     todoList.appendChild(todoCard);
 
     linkIndex(project, todo, todoCard);
+};
+
+const clearTodo = () => {
+    const todoList = document.querySelector('.todo-list');
+    while (todoList.firstElementChild)
+        todoList.removeChild(todoList.firstElementChild);
 };
 
 const startUp = (() => {
@@ -152,8 +158,9 @@ const todoForm = (() => {
                 values.push(input.value);
             };
             values.splice(1 ,0, textArea.value);
-            const todo = constructor.apply(null, values);
-            appendTodo(todo, currentProject.todos);
+            clearTodo();
+            constructor.apply(null, values);
+            appendProject(currentProject);
             closeDialog();
         }, { once: true, signal });
 
