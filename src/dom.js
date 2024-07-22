@@ -82,7 +82,13 @@ const append = (() => {
         todoCard.appendChild(notes);
     
         const checklist = document.createElement('button');
-        checklist.innerHTML = todo.checklist;
+        if (todo.checklist === 'off') {
+            checklist.innerHTML = "Not done";
+            todoCard.classList.add('unfinished');
+        } else if (todo.checklist === 'on') {
+            checklist.innerHTML = "Done";
+            todoCard.classList.add('finished');
+        };
         todoCard.appendChild(checklist);
     
         const todoList = document.querySelector('.todo-list');
@@ -156,10 +162,12 @@ const todoForm = (() => {
                 let value;
                 if (input.value === '') {
                     value = '';
+                } else if (input.type === 'checkbox' && input.checked === false) {
+                    value = 'off';
                 } else {
                     value = input.value;
                 };
-                values.push(input.value);
+                values.push(value);
             };
             values.splice(1 ,0, textArea.value);
             clearTodo();
