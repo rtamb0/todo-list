@@ -24,74 +24,78 @@ const querySelectors = (() => {
     return {body, section, projectDiv, startUpDialog, startUpInput, startUpForm, todoCreate, todoDialog, todoForm, todoCancel, sideBar};
 })();
 
-const appendList = (list) => {
-    for (const project of list) {
-        const projectName = document.createElement('li');
-        projectName.innerHTML = project.name;
-        querySelectors.sideBar.appendChild(projectName);
-    };
-};
-
-const appendProject = (project) => {
-    const todoList = document.createElement('ul');
-    todoList.className = 'todo-list';
-    querySelectors.projectDiv.appendChild(todoList);
-    if (project.todos.length > 0) {
-        for (const todo of project.todos) {
-            appendTodo(todo, project.todos);
+const append = (() => {
+    const list = (list) => {
+        for (const project of list) {
+            const projectName = document.createElement('li');
+            projectName.innerHTML = project.name;
+            querySelectors.sideBar.appendChild(projectName);
         };
     };
-};
 
-const appendSelectedProject = (list, selectedProject) => {
-    for (const project of list) {
-        if (project === selectedProject) {
-            appendProject(selectedProject);
+    const project = (project) => {
+        const todoList = document.createElement('ul');
+        todoList.className = 'todo-list';
+        querySelectors.projectDiv.appendChild(todoList);
+        if (project.todos.length > 0) {
+            for (const currentTodo of project.todos) {
+                todo(currentTodo, project.todos);
+            };
         };
     };
-};
+
+    const selectedProject = (list, selectedProject) => {
+        for (const currentProject of list) {
+            if (currentProject === selectedProject) {
+                project(selectedProject);
+            };
+        };
+    };
+
+    const todo = (todo, project) => {
+        const todoCard = document.createElement('li');
+    
+        const title = document.createElement('h3');
+        title.innerHTML = todo.title;
+        todoCard.appendChild(title);
+    
+        const description = document.createElement('p');
+        description.innerHTML = todo.description;
+        todoCard.appendChild(description);
+    
+        const dueDate = document.createElement('p');
+        dueDate.innerHTML = todo.dueDate;
+        todoCard.appendChild(dueDate);
+    
+        const priority = document.createElement('p');
+        if (todo.priority === '0') {
+            priority.innerHTML = "Low";
+        } else if (todo.priority === '1') {
+            priority.innerHTML = "Moderate";
+        } else if (todo.priority === '2') {
+            priority.innerHTML = "High";
+        };
+        todoCard.appendChild(priority);
+    
+        const notes = document.createElement('h5');
+        notes.innerHTML = todo.notes;
+        todoCard.appendChild(notes);
+    
+        const checklist = document.createElement('button');
+        checklist.innerHTML = todo.checklist;
+        todoCard.appendChild(checklist);
+    
+        const todoList = document.querySelector('.todo-list');
+        todoList.appendChild(todoCard);
+    
+        linkIndex(project, todo, todoCard);
+    };
+
+    return {project, selectedProject, list};
+})();
 
 const linkIndex = (arr, item, element) => {
     element.setAttribute('data-index', arr.indexOf(item));
-};
-
-const appendTodo = (todo, project) => {
-    const todoCard = document.createElement('li');
-
-    const title = document.createElement('h3');
-    title.innerHTML = todo.title;
-    todoCard.appendChild(title);
-
-    const description = document.createElement('p');
-    description.innerHTML = todo.description;
-    todoCard.appendChild(description);
-
-    const dueDate = document.createElement('p');
-    dueDate.innerHTML = todo.dueDate;
-    todoCard.appendChild(dueDate);
-
-    const priority = document.createElement('p');
-    if (todo.priority === '0') {
-        priority.innerHTML = "Low";
-    } else if (todo.priority === '1') {
-        priority.innerHTML = "Moderate";
-    } else if (todo.priority === '2') {
-        priority.innerHTML = "High";
-    };
-    todoCard.appendChild(priority);
-
-    const notes = document.createElement('h5');
-    notes.innerHTML = todo.notes;
-    todoCard.appendChild(notes);
-
-    const checklist = document.createElement('button');
-    checklist.innerHTML = todo.checklist;
-    todoCard.appendChild(checklist);
-
-    const todoList = document.querySelector('.todo-list');
-    todoList.appendChild(todoCard);
-
-    linkIndex(project, todo, todoCard);
 };
 
 const clearTodo = () => {
@@ -114,8 +118,8 @@ const startUp = (() => {
         form.addEventListener('submit', () => {
             const project = constructor(input.value)
             selector(project);
-            appendProject(project);
-            appendList(getList());
+            append.project(project);
+            append.list(getList());
         }, { once: true });
     };
     
@@ -160,7 +164,7 @@ const todoForm = (() => {
             values.splice(1 ,0, textArea.value);
             clearTodo();
             constructor.apply(null, values);
-            appendProject(currentProject);
+            append.project(currentProject);
             closeDialog();
         }, { once: true, signal });
 
@@ -178,6 +182,6 @@ const todoForm = (() => {
     return {show};
 })();
 
-export {appendProject, appendSelectedProject, startUp, appendList, todoForm};
+export {append, startUp, todoForm};
 
 // Perhaps separate the modules by todos and projects instead of doms and logics?
