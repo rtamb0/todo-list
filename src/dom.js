@@ -70,10 +70,13 @@ const append = (() => {
         const priority = document.createElement('p');
         if (todo.priority === '0') {
             priority.innerHTML = "Low";
+            todoCard.classList.add('low');
         } else if (todo.priority === '1') {
             priority.innerHTML = "Moderate";
+            todoCard.classList.add('moderate');
         } else if (todo.priority === '2') {
             priority.innerHTML = "High";
+            todoCard.classList.add('high');
         };
         todoCard.appendChild(priority);
     
@@ -191,5 +194,3 @@ const todoForm = (() => {
 })();
 
 export {append, startUp, todoForm};
-
-// Perhaps separate the modules by todos and projects instead of doms and logics?
