@@ -25,7 +25,13 @@ const projectList = (() => {
         localSave.set('projects', list);
     };
 
-    return {get, getCurrentProject, addProject, addTodoToCurrentProject};
+    const removeTodoFromCurrentProject = (index) => {
+        const todoList = list[project.selector.get()].todos;
+        todoList.splice(index, 1);
+        todos.sort(todoList);
+    };
+
+    return {get, getCurrentProject, addProject, addTodoToCurrentProject, removeTodoFromCurrentProject};
 })();
 
 const project = (() => {
@@ -74,22 +80,6 @@ const localSave = (() => {
     return {get, set};
 })();
 
-const checkLocalProjectList = (() => {
-    if (localSave.get("projects") === null || localSave.get("projects") === undefined || localSave.get("selector") === null || localSave.get("selector") === undefined) {
-        // Creates new default project and saves it locally
-        startUp.show(project.create, project.selector.set, projectList.get);
-    } else {
-        // Gets project list from local stroage
-        const localList = localSave.get("projects");
-        for (const project of localList) {
-            projectList.addProject(project);
-        };
-        project.selector.retrieve(localSave.get("selector"));
-        append.list(projectList.get());
-        append.selectedProject(projectList.get(), projectList.getCurrentProject());
-    };
-})();
-
 const todos = (() => {
     const create = (title, description, dueDate, priority, notes, checklist) => {
         const todo = {title, description, dueDate, priority, notes, checklist}
@@ -120,9 +110,37 @@ const todos = (() => {
             };
         };
     };
+
+    const checklist = (index) => {
+        const todo = projectList.getCurrentProject().todos[index];
+        projectList.removeTodoFromCurrentProject(index);
+
+        if (todo.checklist === 'on') {
+            todo.checklist = 'off';
+        } else if (todo.checklist === 'off') {
+            todo.checklist = 'on';
+        };
+
+        projectList.addTodoToCurrentProject(todo);
+    };
     
-    return {create, sort};
+    return {create, sort, checklist};
 })();
 
+const checkLocalProjectList = (() => {
+    if (localSave.get("projects") === null || localSave.get("projects") === undefined || localSave.get("selector") === null || localSave.get("selector") === undefined) {
+        // Creates new default project and saves it locally
+        startUp.show(project.create, project.selector.set, projectList.get);
+    } else {
+        // Gets project list from local stroage
+        const localList = localSave.get("projects");
+        for (const project of localList) {
+            projectList.addProject(project);
+        };
+        project.selector.retrieve(localSave.get("selector"));
+        append.list(projectList.get());
+        append.selectedProject(projectList.get(), projectList.getCurrentProject(), todos.checklist);
+    };
+})();
 
-todoForm.show(todos.create, projectList.getCurrentProject);
+todoForm.show(todos.create, projectList.getCurrentProject, todos.checklist);

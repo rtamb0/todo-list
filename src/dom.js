@@ -33,26 +33,26 @@ const append = (() => {
         };
     };
 
-    const project = (project) => {
+    const project = (project, changeCheck = 0) => {
         const todoList = document.createElement('ul');
         todoList.className = 'todo-list';
         querySelectors.projectDiv.appendChild(todoList);
         if (project.todos.length > 0) {
             for (const currentTodo of project.todos) {
-                todo(currentTodo, project.todos);
+                todo(currentTodo, project.todos, changeCheck);
             };
         };
     };
 
-    const selectedProject = (list, selectedProject) => {
+    const selectedProject = (list, selectedProject, changeCheck) => {
         for (const currentProject of list) {
             if (currentProject === selectedProject) {
-                project(selectedProject);
+                project(selectedProject, changeCheck);
             };
         };
     };
 
-    const todo = (todo, project) => {
+    const todo = (todo, project, changeCheck) => {
         const todoCard = document.createElement('li');
     
         const title = document.createElement('h3');
@@ -87,12 +87,22 @@ const append = (() => {
         const checklist = document.createElement('button');
         if (todo.checklist === 'off') {
             checklist.innerHTML = "Not done";
-            todoCard.classList.add('unfinished');
+            todoCard.className = 'unfinished';
         } else if (todo.checklist === 'on') {
             checklist.innerHTML = "Done";
-            todoCard.classList.add('finished');
+            todoCard.className = 'finished';
         };
         todoCard.appendChild(checklist);
+        checklist.addEventListener('click', () => {
+            changeCheck(todoCard.getAttribute('data-index'));
+            if (todoCard.className === 'unfinished') {
+                checklist.innerHTML = "Done";
+                todoCard.className = 'finished';
+            } else if (todoCard.className === 'finished') {
+                checklist.innerHTML = "Not done";
+                todoCard.className = 'unfinished';
+            };
+        });
     
         const todoList = document.querySelector('.todo-list');
         todoList.appendChild(todoCard);
@@ -141,18 +151,18 @@ const todoForm = (() => {
     const showButton = querySelectors.todoCreate;
     const cancelButton = querySelectors.todoCancel;
 
-    const show = (constructor, project) => {
+    const show = (constructor, project, changeCheck) => {
         showButton.addEventListener('click', () => {
-            run(constructor, project);
+            run(constructor, project, changeCheck);
         });
     };
 
-    const run = (constructor, project) => {
+    const run = (constructor, project, changeCheck) => {
         dialog.showModal();
-        formListener(constructor, project);
+        formListener(constructor, project, changeCheck);
     };
 
-    const formListener = (constructor, project) => {
+    const formListener = (constructor, project, changeCheck) => {
         const controller = new AbortController();
         const { signal } = controller;
 
@@ -175,7 +185,7 @@ const todoForm = (() => {
             values.splice(1 ,0, textArea.value);
             clearTodo();
             constructor.apply(null, values);
-            append.project(currentProject);
+            append.project(currentProject, changeCheck);
             closeDialog();
         }, { once: true, signal });
 
