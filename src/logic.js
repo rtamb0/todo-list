@@ -27,6 +27,7 @@ const projectList = (() => {
         const todoList = list[project.selector.get()].todos;
         todoList.splice(index, 1);
         todos.sort(todoList);
+        console.log(todoList);
         localSave.set('projects', list);
     };
 
