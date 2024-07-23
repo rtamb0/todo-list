@@ -36,9 +36,14 @@ const append = (() => {
     };
 
     const project = (project) => {
-        const todoList = document.createElement('ul');
-        todoList.className = 'todo-list';
-        querySelectors.projectDiv.appendChild(todoList);
+        if (document.querySelector('.todo-list') === null) {
+            const todoList = document.createElement('ul');
+            todoList.className = 'todo-list';
+            querySelectors.projectDiv.appendChild(todoList);
+        } else {
+            const todoList = document.querySelector('.todo-list');
+            while (todoList.firstElementChild) todoList.removeChild(todoList.firstElementChild);
+        }
         if (project.todos.length > 0) {
             for (const currentTodo of project.todos) {
                 todo(currentTodo, project.todos);
