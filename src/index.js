@@ -62,9 +62,9 @@ const append = (() => {
         removeButton.addEventListener('click', () => {
             const warning = confirm("Are you sure you want to delete this todo?");
             if (warning) {
+                while (todoCard.firstElementChild) todoCard.removeChild(todoCard.firstElementChild);
+                todoCard.remove();
                 projectList.removeTodoFromCurrentProject(todoCard.getAttribute('data-index'));
-                while (todoCard.firstElementChild)
-                    todoCard.removeChild(todoList.firstElementChild);
             };
         });
         todoCard.appendChild(removeButton);
