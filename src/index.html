@@ -8,22 +8,23 @@
 <body>
     <header></header>
     <section>
-        <dialog id="createProject">
-            <form method="dialog" id="projectForm">
-                <h3>Create New Project Here!</h3>
-                <div class="project-input">
-                    <label for="newProject">Project Name</label>
-                    <input type="text" name="newProject" id="newProject" required>
-                </div>
-                <div class="project-buttons">
-                    <input type="submit" value="Create new project">
-                    <button id="cancelNewProject">Cancel</button>
-                </div>
-            </form>
-        </dialog>
         <aside>
             <h2>Your Projects</h2>
+            <button id="createNewProject"></button>
             <div id="projectList"></div>
+            <dialog id="createProject">
+                <form method="dialog" id="projectForm">
+                    <h3>Create New Project Here!</h3>
+                    <div class="project-input">
+                        <label for="newProject">Project Name</label>
+                        <input type="text" name="newProject" id="newProject" required>
+                    </div>
+                    <div class="project-buttons">
+                        <input type="submit" value="Create new project">
+                        <button id="cancelNewProject">Cancel</button>
+                    </div>
+                </form>
+            </dialog>
         </aside>
         <div class="project">
             <button id="makeTodo">Create New Todo</button>
