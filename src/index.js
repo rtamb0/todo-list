@@ -28,22 +28,34 @@ const querySelectors = (() => {
 
 const append = (() => {
     const list = (list) => {
+        let projectList;
+        if (document.querySelector('.project-list') === null) {
+            projectList = document.createElement('ul');
+            projectList.className = 'project-list';
+            querySelectors.sideBar.appendChild(projectList);
+        } else {
+            projectList = document.querySelector('.project-list');
+            while (projectList.firstElementChild) projectList.removeChild(projectList.firstElementChild);
+        };
+
         for (const project of list) {
             const projectName = document.createElement('li');
             projectName.innerHTML = project.name;
-            querySelectors.sideBar.appendChild(projectName);
+            querySelectors.projectList.appendChild(projectName);
         };
     };
 
     const project = (project) => {
+        let todoList;
         if (document.querySelector('.todo-list') === null) {
-            const todoList = document.createElement('ul');
+            todoList = document.createElement('ul');
             todoList.className = 'todo-list';
             querySelectors.projectDiv.appendChild(todoList);
         } else {
-            const todoList = document.querySelector('.todo-list');
+            todoList = document.querySelector('.todo-list');
             while (todoList.firstElementChild) todoList.removeChild(todoList.firstElementChild);
-        }
+        };
+
         if (project.todos.length > 0) {
             for (const currentTodo of project.todos) {
                 todo(currentTodo, project.todos);
