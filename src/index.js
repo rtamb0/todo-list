@@ -7,13 +7,17 @@ const querySelectors = (() => {
 
     const projectDiv = document.querySelector('.project');
 
-    const startUpDialog = document.querySelector('#startupInput');
+    const newProject = document.querySelector('#createProject');
 
-    const startUpInput = document.querySelector('#startup input[type="text"]');
+    const newProjectButton = document.querySelector('#createNewProject');
 
-    const startUpForm = document.querySelector('#startup');
+    const newProjectInput = document.querySelector('#newProject');
 
-    const todoCreate = document.querySelector('#makeTodo')
+    const newProjectForm = document.querySelector('#projectForm');
+
+    const newProjectCancel = document.querySelector('#cancelNewProject');
+
+    const todoCreate = document.querySelector('#makeTodo');
 
     const todoDialog = document.querySelector('#createTodo');
 
@@ -23,25 +27,24 @@ const querySelectors = (() => {
 
     const sideBar = document.querySelector('#projectList');
 
-    return {body, section, projectDiv, startUpDialog, startUpInput, startUpForm, todoCreate, todoDialog, todoForm, todoCancel, sideBar};
+    return {body, section, projectDiv, newProject, newProjectButton, newProjectInput, newProjectForm, newProjectCancel, todoCreate, todoDialog, todoForm, todoCancel, sideBar};
 })();
 
 const append = (() => {
     const list = (list) => {
-        let projectList;
-        if (document.querySelector('.project-list') === null) {
-            projectList = document.createElement('ul');
-            projectList.className = 'project-list';
-            querySelectors.sideBar.appendChild(projectList);
-        } else {
-            projectList = document.querySelector('.project-list');
-            while (projectList.firstElementChild) projectList.removeChild(projectList.firstElementChild);
-        };
+        const addButton = document.createElement('button');
+        addButton.addEventListener('click', () => {
+
+        })
+
+        const projectList = document.createElement('ul');
+        projectList.className = 'project-list';
+        querySelectors.sideBar.appendChild(projectList);
 
         for (const project of list) {
             const projectName = document.createElement('li');
             projectName.innerHTML = project.name;
-            querySelectors.projectList.appendChild(projectName);
+            projectList.appendChild(projectName);
         };
     };
 
@@ -152,25 +155,51 @@ const clearTodo = () => {
         todoList.removeChild(todoList.firstElementChild);
 };
 
-const startUp = (() => {
-    const dialog = querySelectors.startUpDialog;
-    const input = querySelectors.startUpInput;
-    const form = querySelectors.startUpForm;
+const newProjectForm = (() => {
+    const dialog = querySelectors.newProject;
+    const input = querySelectors.newProjectInput;
+    const form = querySelectors.newProjectForm;
+    const createButton = querySelectors.newProjectButton;
+    const cancelButton = querySelectors.newProjectCancel;
 
     const show = () => {
         dialog.showModal();
+        cancelButton.setAttribute('hidden', '');
         formListener();
-    };
+    }
+
+    createButton.addEventListener('click', () => {
+        dialog.showModal();
+        formListener();
+    });
 
     const formListener = () => {
+        const controller = new AbortController();
+        const { signal } = controller;
+
         form.addEventListener('submit', () => {
             const newProject = project.create(input.value)
             project.selector.set(newProject);
             append.project(newProject);
             append.list(projectList.get());
-        }, { once: true });
+            closeDialog();
+            if (cancelButton.getAttribute('hidden') !== null) cancelButton.removeAttribute('hidden');
+        }, { once: true, signal });
+        
+
+        if (cancelButton.getAttribute('hidden') === null) {
+            cancelButton.addEventListener('click', () => {
+                closeDialog();
+                controller.abort();
+            }, { once: true });
+        }
     };
-    
+
+    const closeDialog = () => {
+        dialog.close();
+        form.reset();
+    };
+
     return {show};
 })();
 
@@ -180,11 +209,9 @@ const todoForm = (() => {
     const showButton = querySelectors.todoCreate;
     const cancelButton = querySelectors.todoCancel;
 
-    const show = () => {
-        showButton.addEventListener('click', () => {
-            run();
-        });
-    };
+    showButton.addEventListener('click', () => {
+        run();
+    });  
 
     const run = () => {
         dialog.showModal();
@@ -228,9 +255,6 @@ const todoForm = (() => {
         dialog.close();
         form.reset();
     };
-
-    return {show};
 })();
 
-checkLocalProjectList(startUp, append);
-todoForm.show();
+checkLocalProjectList(newProjectForm, append);
