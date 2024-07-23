@@ -1,146 +1,219 @@
-import { append, startUp, todoForm } from "./dom";
+import { projectList, todos, project, checkLocalProjectList } from "./logic";
 
-const projectList = (() => {
-    const list = [];
+const querySelectors = (() => {
+    const body = document.querySelector('body');
 
-    const get = () => {
-        return list.slice(0);
-    };
+    const section = document.querySelector('section');
 
-    const getCurrentProject = () => {
-        const currentProject = list[project.selector.get()];
-        return currentProject;
-    };
+    const projectDiv = document.querySelector('.project');
 
-    const addProject = (project) => {
-        list.push(project);
-        localSave.set('projects', list);
-    };
+    const startUpDialog = document.querySelector('#startupInput');
 
-    const addTodoToCurrentProject = (todo) => {
-        const todoList = list[project.selector.get()].todos;
-        todoList.push(todo);
-        todos.sort(todoList);
-        console.log(todoList);
-        localSave.set('projects', list);
-    };
+    const startUpInput = document.querySelector('#startup input[type="text"]');
 
-    const removeTodoFromCurrentProject = (index) => {
-        const todoList = list[project.selector.get()].todos;
-        todoList.splice(index, 1);
-        todos.sort(todoList);
-    };
+    const startUpForm = document.querySelector('#startup');
 
-    return {get, getCurrentProject, addProject, addTodoToCurrentProject, removeTodoFromCurrentProject};
+    const todoCreate = document.querySelector('#makeTodo')
+
+    const todoDialog = document.querySelector('#createTodo');
+
+    const todoForm = document.querySelector('#todoForm');
+
+    const todoCancel = document.querySelector('#cancelTodo');
+
+    const sideBar = document.querySelector('#projectList');
+
+    return {body, section, projectDiv, startUpDialog, startUpInput, startUpForm, todoCreate, todoDialog, todoForm, todoCancel, sideBar};
 })();
 
-const project = (() => {
-    const create = (name) => {
-        const project = {};
-        project.name = name;
-        project.todos = [];
-        projectList.addProject(project);
-        const projectGet = project;
-        return projectGet;
-    };
-
-    const selector = (() => {
-        let selector;
-    
-        const set = (project) => {
-            selector = projectList.get().indexOf(project);
-            localSave.set("selector", selector);
+const append = (() => {
+    const list = (list) => {
+        for (const project of list) {
+            const projectName = document.createElement('li');
+            projectName.innerHTML = project.name;
+            querySelectors.sideBar.appendChild(projectName);
         };
-    
-        const retrieve = (savedSelector) => {
-            selector = savedSelector;
-        };
-    
-        const get = () => {
-            const getSelector = selector;
-            return getSelector;
-        };
-    
-        return {set, retrieve, get};
-    })();
-
-    return {create, selector};
-})();
-
-const localSave = (() => {
-    const get = (key) => {
-        const item = localStorage.getItem(key);
-        return JSON.parse(item);
     };
 
-    const set = (key, item) => {
-        localStorage.setItem(key, JSON.stringify(item));
-    };
-
-    return {get, set};
-})();
-
-const todos = (() => {
-    const create = (title, description, dueDate, priority, notes, checklist) => {
-        const todo = {title, description, dueDate, priority, notes, checklist}
-        projectList.addTodoToCurrentProject(todo);
-        return todo;
-    };
-
-    const sort = (todos) => {
-        for (let i = 0; i < todos.length; i++) {
-            for (let j = 0; j < todos.length - i - 1; j++) {
-                const year1 = todos[j].dueDate.slice(0, 4);
-                const month1 = todos[j].dueDate.slice(5, 7);
-                const day1 = todos[j].dueDate.slice(8, 10);
-                
-                const year2 = todos[j + 1].dueDate.slice(0, 4);
-                const month2 = todos[j + 1].dueDate.slice(5, 7);
-                const day2 = todos[j + 1].dueDate.slice(8, 10);
-    
-                const priority1 = todos[j].priority;
-                
-                const priority2 = todos[j + 1].priority;
-    
-                if (priority2 > priority1 || ((priority2 === priority1) && (year1 > year2 || (year1 === year2 && month1 > month2) || (year1 === year2 && month1 === month2 && day1 > day2)))) {
-                    const temp = todos[j];
-                    todos[j] = todos[j + 1];
-                    todos[j + 1] = temp;
-                };
+    const project = (project) => {
+        const todoList = document.createElement('ul');
+        todoList.className = 'todo-list';
+        querySelectors.projectDiv.appendChild(todoList);
+        if (project.todos.length > 0) {
+            for (const currentTodo of project.todos) {
+                todo(currentTodo, project.todos);
             };
         };
     };
 
-    const checklist = (index) => {
-        const todo = projectList.getCurrentProject().todos[index];
-        projectList.removeTodoFromCurrentProject(index);
-
-        if (todo.checklist === 'on') {
-            todo.checklist = 'off';
-        } else if (todo.checklist === 'off') {
-            todo.checklist = 'on';
+    const selectedProject = (list, selectedProject) => {
+        for (const currentProject of list) {
+            if (currentProject === selectedProject) {
+                project(selectedProject);
+            };
         };
+    };
 
-        projectList.addTodoToCurrentProject(todo);
+    const todo = (todo, project) => {
+        const todoCard = document.createElement('li');
+        linkIndex(project, todo, todoCard);
+
+        const removeButton = document.createElement('button');
+        removeButton.addEventListener('click', () => {
+            const warning = confirm("Are you sure you want to delete this todo?");
+            if (warning) {
+                projectList.removeTodoFromCurrentProject(todoCard.getAttribute('data-index'));
+                while (todoCard.firstElementChild)
+                    todoCard.removeChild(todoList.firstElementChild);
+            };
+        });
+        todoCard.appendChild(removeButton);
+    
+        const title = document.createElement('h3');
+        title.innerHTML = todo.title;
+        todoCard.appendChild(title);
+    
+        const description = document.createElement('p');
+        description.innerHTML = todo.description;
+        todoCard.appendChild(description);
+    
+        const dueDate = document.createElement('p');
+        dueDate.innerHTML = todo.dueDate;
+        todoCard.appendChild(dueDate);
+    
+        const priority = document.createElement('p');
+        if (todo.priority === '0') {
+            priority.innerHTML = "Low";
+            todoCard.classList.add('low');
+        } else if (todo.priority === '1') {
+            priority.innerHTML = "Moderate";
+            todoCard.classList.add('moderate');
+        } else if (todo.priority === '2') {
+            priority.innerHTML = "High";
+            todoCard.classList.add('high');
+        };
+        todoCard.appendChild(priority);
+    
+        const notes = document.createElement('h5');
+        notes.innerHTML = todo.notes;
+        todoCard.appendChild(notes);
+    
+        const checklist = document.createElement('button');
+        if (todo.checklist === 'off') {
+            checklist.innerHTML = "Not done";
+            todoCard.className = 'unfinished';
+        } else if (todo.checklist === 'on') {
+            checklist.innerHTML = "Done";
+            todoCard.className = 'finished';
+        };
+        todoCard.appendChild(checklist);
+        checklist.addEventListener('click', () => {
+            todos.checklist(todoCard.getAttribute('data-index'));
+            if (todoCard.className === 'unfinished') {
+                checklist.innerHTML = "Done";
+                todoCard.className = 'finished';
+            } else if (todoCard.className === 'finished') {
+                checklist.innerHTML = "Not done";
+                todoCard.className = 'unfinished';
+            };
+        });
+    
+        const todoList = document.querySelector('.todo-list');
+        todoList.appendChild(todoCard);
+    };
+
+    return {project, selectedProject, list};
+})();
+
+const linkIndex = (arr, item, element) => {
+    element.setAttribute('data-index', arr.indexOf(item));
+};
+
+const clearTodo = () => {
+    const todoList = document.querySelector('.todo-list');
+    while (todoList.firstElementChild)
+        todoList.removeChild(todoList.firstElementChild);
+};
+
+const startUp = (() => {
+    const dialog = querySelectors.startUpDialog;
+    const input = querySelectors.startUpInput;
+    const form = querySelectors.startUpForm;
+
+    const show = () => {
+        dialog.showModal();
+        formListener();
+    };
+
+    const formListener = () => {
+        form.addEventListener('submit', () => {
+            const newProject = project.create(input.value)
+            project.selector.set(newProject);
+            append.project(newProject);
+            append.list(projectList.get());
+        }, { once: true });
     };
     
-    return {create, sort, checklist};
+    return {show};
 })();
 
-const checkLocalProjectList = (() => {
-    if (localSave.get("projects") === null || localSave.get("projects") === undefined || localSave.get("selector") === null || localSave.get("selector") === undefined) {
-        // Creates new default project and saves it locally
-        startUp.show(project.create, project.selector.set, projectList.get);
-    } else {
-        // Gets project list from local stroage
-        const localList = localSave.get("projects");
-        for (const project of localList) {
-            projectList.addProject(project);
-        };
-        project.selector.retrieve(localSave.get("selector"));
-        append.list(projectList.get());
-        append.selectedProject(projectList.get(), projectList.getCurrentProject(), todos.checklist);
+const todoForm = (() => {
+    const dialog = querySelectors.todoDialog;
+    const form = querySelectors.todoForm;
+    const showButton = querySelectors.todoCreate;
+    const cancelButton = querySelectors.todoCancel;
+
+    const show = () => {
+        showButton.addEventListener('click', () => {
+            run();
+        });
     };
+
+    const run = () => {
+        dialog.showModal();
+        formListener();
+    };
+
+    const formListener = () => {
+        const controller = new AbortController();
+        const { signal } = controller;
+
+        form.addEventListener('submit', () => {
+            const currentProject = projectList.getCurrentProject();
+            const inputs = document.querySelectorAll('#todoForm input');
+            const textArea = document.querySelector('#todoForm textarea');
+            const values = [];
+            for (const input of inputs) {
+                let value;
+                if (input.value === '') {
+                    value = '';
+                } else if (input.type === 'checkbox' && input.checked === false) {
+                    value = 'off';
+                } else {
+                    value = input.value;
+                };
+                values.push(value);
+            };
+            values.splice(1 ,0, textArea.value);
+            clearTodo();
+            todos.create.apply(null, values);
+            append.project(currentProject);
+            closeDialog();
+        }, { once: true, signal });
+
+        cancelButton.addEventListener('click', () => {
+            closeDialog();
+            controller.abort();
+        }, { once: true });
+    };
+
+    const closeDialog = () => {
+        dialog.close();
+        form.reset();
+    };
+
+    return {show};
 })();
 
-todoForm.show(todos.create, projectList.getCurrentProject, todos.checklist);
+checkLocalProjectList(startUp, append);
+todoForm.show();
