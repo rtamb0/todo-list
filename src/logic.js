@@ -1,5 +1,3 @@
-// import { append, startUp, todoForm } from ".";
-
 const projectList = (() => {
     const list = [];
 
@@ -144,5 +142,4 @@ const checkLocalProjectList = (startUp, append) => {
     };
 };
 
-// todoForm.show(todos.create, projectList.getCurrentProject, todos.checklist, projectList.removeTodoFromCurrentProject);
 export {projectList, todos, project, checkLocalProjectList};
