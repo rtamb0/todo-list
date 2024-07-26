@@ -236,7 +236,6 @@ const newProjectForm = (() => {
         form.addEventListener('submit', () => {
             const newProject = project.create(input.value);
             project.selector.set(newProject);
-            clearElements.projects();
             append.list(projectList.get());
             append.project(newProject);
             closeDialog();
