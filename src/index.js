@@ -76,18 +76,66 @@ const append = (() => {
 
     const todo = (todo, project) => {
         const todoCard = document.createElement('li');
+        const index = todoCard.getAttribute('data-index');
         linkIndex(project, todo, todoCard);
 
         const removeButton = document.createElement('button');
         removeButton.addEventListener('click', () => {
             const warning = confirm("Are you sure you want to delete this todo?");
             if (warning) {
-                while (todoCard.firstElementChild) todoCard.removeChild(todoCard.firstElementChild);
-                todoCard.remove();
-                projectList.removeTodoFromCurrentProject(todoCard.getAttribute('data-index'));
+                projectList.removeTodoFromCurrentProject(index);
+                clearTodo();
+                append.project(projectList.getCurrentProject());
             };
         });
         todoCard.appendChild(removeButton);
+
+        const editButton = document.createElement('button');
+        editButton.addEventListener('click', () => {
+            todoForm.run(index);
+            const inputs = document.querySelectorAll('#todoForm input');
+            const textArea = document.querySelector('#todoForm textarea');
+            for (const input of inputs) {
+                const inputType = input.getAttribute('name');
+                console.log(inputType)
+                switch (inputType) {
+                    case 'title':
+                        input.value = title.innerHTML;
+                        break;
+                    case 'duedate':
+                        input.value = dueDate.innerHTML;
+                        break;
+                    case 'priority':
+                        switch (priority.innerHTML) {
+                            case 'Low':
+                                input.value = '0';
+                                break;
+                            case 'Moderate':
+                                input.value = '1';
+                                break;
+                            case 'High':
+                                input.value = '2';
+                                break;
+                        };
+                        break;
+                    case 'notes':
+                        input.value = notes.innerHTML;
+                        break;
+                    case 'checklist':
+                        switch (checklist.innerHTML) {
+                            case 'Not done':
+                                input.checked = false;
+                                break;
+                            case 'Done':
+                                input.checked = true;
+                                break;
+                        };
+                        break;
+                };
+            };
+            textArea.value = description.innerHTML;
+        });
+        todoCard.appendChild(editButton);
     
         const title = document.createElement('h3');
         title.innerHTML = todo.title;
@@ -128,7 +176,7 @@ const append = (() => {
         };
         todoCard.appendChild(checklist);
         checklist.addEventListener('click', () => {
-            todos.checklist(todoCard.getAttribute('data-index'));
+            todos.checklist(index);
             if (todoCard.className === 'unfinished') {
                 checklist.innerHTML = "Done";
                 todoCard.className = 'finished';
@@ -166,7 +214,7 @@ const newProjectForm = (() => {
         dialog.showModal();
         cancelButton.setAttribute('hidden', '');
         formListener();
-    }
+    };
 
     createButton.addEventListener('click', () => {
         dialog.showModal();
@@ -213,12 +261,12 @@ const todoForm = (() => {
         run();
     });  
 
-    const run = () => {
+    const run = (editTodoIndex = false) => {
         dialog.showModal();
-        formListener();
+        formListener(editTodoIndex);
     };
 
-    const formListener = () => {
+    const formListener = (editTodoIndex = false) => {
         const controller = new AbortController();
         const { signal } = controller;
 
@@ -239,6 +287,7 @@ const todoForm = (() => {
                 values.push(value);
             };
             values.splice(1 ,0, textArea.value);
+            if (editTodoIndex !== false) projectList.removeTodoFromCurrentProject(editTodoIndex);
             clearTodo();
             todos.create.apply(null, values);
             append.project(currentProject);
@@ -255,6 +304,8 @@ const todoForm = (() => {
         dialog.close();
         form.reset();
     };
+
+    return {run};
 })();
 
 checkLocalProjectList(newProjectForm, append);
