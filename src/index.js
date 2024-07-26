@@ -261,12 +261,22 @@ const todoForm = (() => {
         run();
     });  
 
-    const run = (editTodoIndex = false) => {
+    const run = (editTodo = false) => {
+        const formTitle = dialog.querySelector('h3');
+        const confirmButton = form.querySelector('input[type="submit"]');
+        console.log(editTodo)
+        if (editTodo !== false) {
+            formTitle.innerHTML = "What would you like to edit?"
+            confirmButton.value = "Change";
+        } else {
+            formTitle.innerHTML = "Create your to-do here!"
+            confirmButton.value = "Create";
+        }
         dialog.showModal();
-        formListener(editTodoIndex);
+        formListener(editTodo);
     };
 
-    const formListener = (editTodoIndex = false) => {
+    const formListener = (editTodo = false) => {
         const controller = new AbortController();
         const { signal } = controller;
 
@@ -287,7 +297,10 @@ const todoForm = (() => {
                 values.push(value);
             };
             values.splice(1 ,0, textArea.value);
-            if (editTodoIndex !== false) projectList.removeTodoFromCurrentProject(editTodoIndex);
+            if (editTodo !== false) {
+                const index = editTodo;
+                projectList.removeTodoFromCurrentProject(index);
+            };
             clearTodo();
             todos.create.apply(null, values);
             append.project(currentProject);
