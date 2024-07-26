@@ -1,4 +1,4 @@
-import { projectList, todos, project, checkLocalProjectList } from "./logic";
+import { projectList, todos, projectLogic, checkLocalProjectList } from "./logic";
 
 const querySelectors = (() => {
     const body = document.querySelector('body');
@@ -39,11 +39,15 @@ const append = (() => {
             querySelectors.sideBar.appendChild(projectList);
 
         } else {
-            clearElements.projects();
+            clearElements.list();
         };
-        for (const project of list) {
+        for (const currentProject of list) {
             const projectName = document.createElement('li');
-            projectName.innerHTML = project.name;
+            projectName.innerHTML = currentProject.name;
+            projectName.addEventListener('click', () => {
+                projectLogic.selector.set(currentProject);
+                project(currentProject);
+            });
             projectList.appendChild(projectName);
         };
     };
@@ -202,13 +206,13 @@ const clearElements = (() => {
             todoList.removeChild(todoList.firstElementChild);
     };
 
-    const projects = () => {
+    const list = () => {
         const projectList = document.querySelector('.project-list');
         while (projectList.firstElementChild)
             projectList.removeChild(projectList.firstElementChild);
     };
     
-    return {todos, projects};
+    return {todos, list};
 })();
 
 const newProjectForm = (() => {
@@ -234,8 +238,8 @@ const newProjectForm = (() => {
         const { signal } = controller;
 
         form.addEventListener('submit', () => {
-            const newProject = project.create(input.value);
-            project.selector.set(newProject);
+            const newProject = projectLogic.create(input.value);
+            projectLogic.selector.set(newProject);
             append.list(projectList.get());
             append.project(newProject);
             closeDialog();
