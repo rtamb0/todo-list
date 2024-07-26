@@ -6,7 +6,7 @@ const projectList = (() => {
     };
 
     const getCurrentProject = () => {
-        const currentProject = list[project.selector.get()];
+        const currentProject = list[projectLogic.selector.get()];
         return currentProject;
     };
 
@@ -16,7 +16,7 @@ const projectList = (() => {
     };
 
     const addTodoToCurrentProject = (todo) => {
-        const todoList = list[project.selector.get()].todos;
+        const todoList = list[projectLogic.selector.get()].todos;
         todoList.push(todo);
         todos.sort(todoList);
         console.log(todoList);
@@ -24,7 +24,7 @@ const projectList = (() => {
     };
 
     const removeTodoFromCurrentProject = (index) => {
-        const todoList = list[project.selector.get()].todos;
+        const todoList = list[projectLogic.selector.get()].todos;
         todoList.splice(index, 1);
         todos.sort(todoList);
         console.log(todoList);
@@ -34,7 +34,7 @@ const projectList = (() => {
     return {get, getCurrentProject, addProject, addTodoToCurrentProject, removeTodoFromCurrentProject};
 })();
 
-const project = (() => {
+const projectLogic = (() => {
     const create = (name) => {
         const project = {};
         project.name = name;
@@ -137,10 +137,10 @@ const checkLocalProjectList = (startUp, append) => {
         for (const project of localList) {
             projectList.addProject(project);
         };
-        project.selector.retrieve(localSave.get("selector"));
+        projectLogic.selector.retrieve(localSave.get("selector"));
         append.list(projectList.get());
         append.selectedProject(projectList.get(), projectList.getCurrentProject());
     };
 };
 
-export {projectList, todos, project, checkLocalProjectList};
+export {projectList, todos, projectLogic, checkLocalProjectList};
