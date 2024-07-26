@@ -76,8 +76,8 @@ const append = (() => {
 
     const todo = (todo, project) => {
         const todoCard = document.createElement('li');
-        const index = todoCard.getAttribute('data-index');
         linkIndex(project, todo, todoCard);
+        const index = todoCard.getAttribute('data-index');
 
         const removeButton = document.createElement('button');
         removeButton.addEventListener('click', () => {
@@ -264,7 +264,6 @@ const todoForm = (() => {
     const run = (editTodo = false) => {
         const formTitle = dialog.querySelector('h3');
         const confirmButton = form.querySelector('input[type="submit"]');
-        console.log(editTodo)
         if (editTodo !== false) {
             formTitle.innerHTML = "What would you like to edit?"
             confirmButton.value = "Change";
