@@ -32,10 +32,15 @@ const querySelectors = (() => {
 
 const append = (() => {
     const list = (list) => {
-        const projectList = document.createElement('ul');
-        projectList.className = 'project-list';
-        querySelectors.sideBar.appendChild(projectList);
+        let projectList = document.querySelector('.project-list');
+        if (projectList === null) {
+            projectList = document.createElement('ul');
+            projectList.className = 'project-list';
+            querySelectors.sideBar.appendChild(projectList);
 
+        } else {
+            clearElements.projects();
+        };
         for (const project of list) {
             const projectName = document.createElement('li');
             projectName.innerHTML = project.name;
@@ -44,14 +49,13 @@ const append = (() => {
     };
 
     const project = (project) => {
-        let todoList;
-        if (document.querySelector('.todo-list') === null) {
+        let todoList = document.querySelector('.todo-list');
+        if (todoList === null) {
             todoList = document.createElement('ul');
             todoList.className = 'todo-list';
             querySelectors.projectDiv.appendChild(todoList);
         } else {
-            todoList = document.querySelector('.todo-list');
-            while (todoList.firstElementChild) todoList.removeChild(todoList.firstElementChild);
+            clearElements.todos();
         };
 
         if (project.todos.length > 0) {
@@ -78,7 +82,6 @@ const append = (() => {
             const warning = confirm("Are you sure you want to delete this todo?");
             if (warning) {
                 projectList.removeTodoFromCurrentProject(index);
-                clearElements.todos();
                 append.project(projectList.getCurrentProject());
             };
         });
@@ -231,11 +234,11 @@ const newProjectForm = (() => {
         const { signal } = controller;
 
         form.addEventListener('submit', () => {
-            const newProject = project.create(input.value)
+            const newProject = project.create(input.value);
             project.selector.set(newProject);
             clearElements.projects();
-            append.project(newProject);
             append.list(projectList.get());
+            append.project(newProject);
             closeDialog();
             if (cancelButton.getAttribute('hidden') !== null) cancelButton.removeAttribute('hidden');
         }, { once: true, signal });
@@ -306,7 +309,6 @@ const todoForm = (() => {
                 const index = editTodo;
                 projectList.removeTodoFromCurrentProject(index);
             };
-            clearElements.todos();
             todos.create.apply(null, values);
             append.project(currentProject);
             closeDialog();
