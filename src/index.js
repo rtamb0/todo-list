@@ -76,8 +76,7 @@ const append = (() => {
 
     const todo = (todo, project) => {
         const todoCard = document.createElement('li');
-        linkIndex(project, todo, todoCard);
-        const index = todoCard.getAttribute('data-index');
+        const index = linkIndex(project, todo, todoCard);
 
         const removeButton = document.createElement('button');
         removeButton.addEventListener('click', () => {
@@ -195,6 +194,7 @@ const append = (() => {
 
 const linkIndex = (arr, item, element) => {
     element.setAttribute('data-index', arr.indexOf(item));
+    return element.getAttribute('data-index');
 };
 
 const clearTodo = () => {
