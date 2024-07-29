@@ -193,10 +193,10 @@ const append = (() => {
         const checklist = document.createElement('button');
         if (todo.checklist === 'off') {
             checklist.innerHTML = "Not done";
-            todoCard.className = 'unfinished';
+            todoCard.classList.add('unfinished');
         } else if (todo.checklist === 'on') {
             checklist.innerHTML = "Done";
-            todoCard.className = 'finished';
+            todoCard.classList.add('finished');
         };
         todoCard.appendChild(checklist);
         checklist.addEventListener('click', () => {
