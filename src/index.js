@@ -45,10 +45,18 @@ const append = (() => {
 
         for (const currentProject of list) {
             const project = document.createElement('li');
+            const index = linkIndex(list, currentProject, project);
+            if (index === projectLogic.selector.get()) project.className = 'active';
             project.addEventListener('click', () => {
                 projectLogic.selector.set(currentProject);
+                const projectList = projects.querySelectorAll('li');
+                for (const project of projectList) {
+                    project.className = '';
+                };
+                project.className = 'active';
                 append.project(currentProject);
             });
+
             projects.appendChild(project);
 
             const projectText = document.createElement('p');
@@ -221,7 +229,7 @@ const append = (() => {
 
 const linkIndex = (arr, item, element) => {
     element.setAttribute('data-index', arr.indexOf(item));
-    return element.getAttribute('data-index');
+    return parseInt(element.getAttribute('data-index'));
 };
 
 const clearElements = (() => {
