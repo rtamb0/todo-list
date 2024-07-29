@@ -105,7 +105,6 @@ const append = (() => {
                 append.project(projectList.getCurrentProject());
             };
         });
-        todoCard.appendChild(removeButton);
 
         const editButton = document.createElement('button');
         editButton.addEventListener('click', () => {
@@ -151,7 +150,6 @@ const append = (() => {
             };
             textArea.value = description.innerHTML;
         });
-        todoCard.appendChild(editButton);
     
         const title = document.createElement('h3');
         title.innerHTML = todo.title;
@@ -197,12 +195,16 @@ const append = (() => {
             todoCard.appendChild(description);
             todoCard.appendChild(priority);
             todoCard.appendChild(notes);
+            todoCard.appendChild(editButton);
+            todoCard.appendChild(removeButton);
         });
 
         todoCard.addEventListener('mouseleave', () => {
             todoCard.removeChild(description);
             todoCard.removeChild(priority);
             todoCard.removeChild(notes);
+            todoCard.removeChild(editButton);
+            todoCard.removeChild(removeButton);
         });
     
         const todoList = document.querySelector('.todo-list');
