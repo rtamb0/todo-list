@@ -32,23 +32,39 @@ const querySelectors = (() => {
 
 const append = (() => {
     const list = (list) => {
-        let projectList = document.querySelector('.project-list');
-        if (projectList === null) {
-            projectList = document.createElement('ul');
-            projectList.className = 'project-list';
-            querySelectors.sideBar.appendChild(projectList);
-
+        let projects = document.querySelector('.project-list');
+        if (projects === null) {
+            projects = document.createElement('ul');
+            projects.className = 'project-list';
+            querySelectors.sideBar.appendChild(projects);
         } else {
             clearElements.list();
         };
+
         for (const currentProject of list) {
-            const projectName = document.createElement('li');
-            projectName.innerHTML = currentProject.name;
-            projectName.addEventListener('click', () => {
+            const project = document.createElement('li');
+            project.addEventListener('click', () => {
                 projectLogic.selector.set(currentProject);
-                project(currentProject);
+                append.project(currentProject);
             });
-            projectList.appendChild(projectName);
+            projects.appendChild(project);
+
+            const projectText = document.createElement('p');
+            projectText.innerHTML = currentProject.name;
+            project.appendChild(projectText);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const warning = confirm("Are you sure you want to delete this project?");
+                if (warning) {
+                    projectLogic.selector.setAfterDeletion(currentProject);
+                    projectList.removeProject(currentProject);
+                    append.list(projectList.get());
+                    append.project(projectList.getCurrentProject());
+                };
+            });
+            project.appendChild(deleteButton);
         };
     };
 
@@ -72,7 +88,7 @@ const append = (() => {
     const selectedProject = (list, selectedProject) => {
         for (const currentProject of list) {
             if (currentProject === selectedProject) {
-                project(selectedProject);
+                append.project(selectedProject);
             };
         };
     };
@@ -98,7 +114,6 @@ const append = (() => {
             const textArea = document.querySelector('#todoForm textarea');
             for (const input of inputs) {
                 const inputType = input.getAttribute('name');
-                console.log(inputType)
                 switch (inputType) {
                     case 'title':
                         input.value = title.innerHTML;
