@@ -4,6 +4,12 @@
     --purple: rgb(79, 23, 135);
     --pink: rgb(235, 54, 120);
     --orange: rgb(251, 119, 60);
+    --lightorange: rgb(255, 158, 111);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 body {
@@ -59,10 +65,6 @@ aside #createNewProject:active {
     background-color: rgb(105, 43, 167);
 }
 
-#projectList ul {
-    padding: 0;
-}
-
 #projectList li {
     display: flex;
     align-items: center;
@@ -98,12 +100,44 @@ section {
     grid-column: 2 / 3;
 }
 
-div.project {
+.project .todo-list {
     display: grid;
+    margin-left: 20px;
+    margin-right: 20px;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
 }
 
-ul {
-    list-style: none;
+.project #makeTodo {
+    width: 100%;
+    padding: 3rem;
+    border-style: none;
+    background-color: var(--orange);
+    font-size: 2.5rem;
+    color: var(--navy);
+}
+
+.project #makeTodo:hover {
+    background-color: var(--pink);
+    color: white;
+}
+
+.todo-list li {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-list li div:nth-of-type(1) {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--pink);
+    color: var(--purple);
+}
+
+.todo-list li div:nth-of-type(2) {
+    color: var(--purple);
+    background-color: var(--lightorange);
 }
 
 footer {
