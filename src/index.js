@@ -46,18 +46,6 @@ const append = (() => {
         for (const currentProject of list) {
             const project = document.createElement('li');
             const index = linkIndex(list, currentProject, project);
-            if (index === projectLogic.selector.get()) project.className = 'active';
-            project.addEventListener('click', () => {
-                projectLogic.selector.set(currentProject);
-                const projectList = projects.querySelectorAll('li');
-                for (const project of projectList) {
-                    project.className = '';
-                };
-                project.className = 'active';
-                append.project(currentProject);
-            });
-
-            projects.appendChild(project);
 
             const projectText = document.createElement('p');
             projectText.innerHTML = currentProject.name;
@@ -74,7 +62,28 @@ const append = (() => {
                     append.project(projectList.getCurrentProject());
                 };
             });
-            project.appendChild(deleteButton);
+            
+            if (index === projectLogic.selector.get()) {
+                project.className = 'active';
+                project.appendChild(deleteButton);
+            };
+
+            project.addEventListener('click', () => {
+                projectLogic.selector.set(currentProject);
+                const projectList = projects.querySelectorAll('li');
+                for (const project of projectList) {
+                    if (project.classList.contains('active')) {
+                        project.className = '';
+                        const deleteButton = project.querySelector('button')
+                        project.removeChild(deleteButton);
+                    };
+                };
+                project.className = 'active';
+                project.appendChild(deleteButton);
+                append.project(currentProject);
+            });
+
+            projects.appendChild(project);
         };
     };
 
