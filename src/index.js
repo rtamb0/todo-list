@@ -159,7 +159,6 @@ const append = (() => {
     
         const description = document.createElement('p');
         description.innerHTML = todo.description;
-        todoCard.appendChild(description);
     
         const dueDate = document.createElement('p');
         dueDate.innerHTML = todo.dueDate;
@@ -176,11 +175,9 @@ const append = (() => {
             priority.innerHTML = "High";
             todoCard.classList.add('high');
         };
-        todoCard.appendChild(priority);
     
         const notes = document.createElement('h5');
         notes.innerHTML = todo.notes;
-        todoCard.appendChild(notes);
     
         const checklist = document.createElement('button');
         if (todo.checklist === 'off') {
@@ -194,6 +191,18 @@ const append = (() => {
         checklist.addEventListener('click', () => {
             todos.checklist(index);
             append.project(projectList.getCurrentProject());
+        });
+
+        todoCard.addEventListener('mouseenter', () => {
+            todoCard.appendChild(description);
+            todoCard.appendChild(priority);
+            todoCard.appendChild(notes);
+        });
+
+        todoCard.addEventListener('mouseleave', () => {
+            todoCard.removeChild(description);
+            todoCard.removeChild(priority);
+            todoCard.removeChild(notes);
         });
     
         const todoList = document.querySelector('.todo-list');
