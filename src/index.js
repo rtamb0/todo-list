@@ -156,7 +156,10 @@ const append = (() => {
         todoCard.appendChild(title);
     
         const description = document.createElement('p');
-        description.innerHTML = todo.description;
+        if (todo.description === "") {
+            description.innerHTML = "(No description provided)"
+            todoCard.classList.add("no-description");
+        } else description.innerHTML = todo.description;
     
         const dueDate = document.createElement('p');
         dueDate.innerHTML = todo.dueDate;
