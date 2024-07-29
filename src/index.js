@@ -115,6 +115,52 @@ const append = (() => {
     const todo = (todo, project) => {
         const todoCard = document.createElement('li');
         const index = linkIndex(project, todo, todoCard);
+        const frontWrapper = document.createElement('div');
+        const tooltipWrapper = document.createElement('div');
+    
+        const title = document.createElement('h3');
+        title.innerHTML = todo.title;
+        frontWrapper.appendChild(title);
+    
+        const description = document.createElement('p');
+        if (todo.description === "") {
+            description.innerHTML = "(No description provided)"
+            todoCard.classList.add("no-description");
+        } else description.innerHTML = todo.description;
+        tooltipWrapper.appendChild(description);
+    
+        const dueDate = document.createElement('p');
+        dueDate.innerHTML = todo.dueDate;
+        frontWrapper.appendChild(dueDate);
+    
+        const priority = document.createElement('p');
+        if (todo.priority === '0') {
+            priority.innerHTML = "Low";
+            todoCard.classList.add('low');
+        } else if (todo.priority === '1') {
+            priority.innerHTML = "Moderate";
+            todoCard.classList.add('moderate');
+        } else if (todo.priority === '2') {
+            priority.innerHTML = "High";
+            todoCard.classList.add('high');
+        };
+    
+        const notes = document.createElement('h5');
+        notes.innerHTML = todo.notes;
+    
+        const checklist = document.createElement('button');
+        if (todo.checklist === 'off') {
+            checklist.innerHTML = "Not done";
+            todoCard.classList.add('unfinished');
+        } else if (todo.checklist === 'on') {
+            checklist.innerHTML = "Done";
+            todoCard.classList.add('finished');
+        };
+        checklist.addEventListener('click', () => {
+            todos.checklist(index);
+            append.project(projectList.getCurrentProject());
+        });
+        frontWrapper.appendChild(checklist);
 
         const removeButton = document.createElement('button');
         removeButton.addEventListener('click', () => {
@@ -124,6 +170,7 @@ const append = (() => {
                 append.project(projectList.getCurrentProject());
             };
         });
+        tooltipWrapper.appendChild(removeButton);
 
         const editButton = document.createElement('button');
         editButton.addEventListener('click', () => {
@@ -169,64 +216,16 @@ const append = (() => {
             };
             textArea.value = description.innerHTML;
         });
-    
-        const title = document.createElement('h3');
-        title.innerHTML = todo.title;
-        todoCard.appendChild(title);
-    
-        const description = document.createElement('p');
-        if (todo.description === "") {
-            description.innerHTML = "(No description provided)"
-            todoCard.classList.add("no-description");
-        } else description.innerHTML = todo.description;
-    
-        const dueDate = document.createElement('p');
-        dueDate.innerHTML = todo.dueDate;
-        todoCard.appendChild(dueDate);
-    
-        const priority = document.createElement('p');
-        if (todo.priority === '0') {
-            priority.innerHTML = "Low";
-            todoCard.classList.add('low');
-        } else if (todo.priority === '1') {
-            priority.innerHTML = "Moderate";
-            todoCard.classList.add('moderate');
-        } else if (todo.priority === '2') {
-            priority.innerHTML = "High";
-            todoCard.classList.add('high');
-        };
-    
-        const notes = document.createElement('h5');
-        notes.innerHTML = todo.notes;
-    
-        const checklist = document.createElement('button');
-        if (todo.checklist === 'off') {
-            checklist.innerHTML = "Not done";
-            todoCard.classList.add('unfinished');
-        } else if (todo.checklist === 'on') {
-            checklist.innerHTML = "Done";
-            todoCard.classList.add('finished');
-        };
-        todoCard.appendChild(checklist);
-        checklist.addEventListener('click', () => {
-            todos.checklist(index);
-            append.project(projectList.getCurrentProject());
-        });
+        tooltipWrapper.appendChild(editButton);
+
+        todoCard.appendChild(frontWrapper);
 
         todoCard.addEventListener('mouseenter', () => {
-            todoCard.appendChild(description);
-            todoCard.appendChild(priority);
-            todoCard.appendChild(notes);
-            todoCard.appendChild(editButton);
-            todoCard.appendChild(removeButton);
+            todoCard.appendChild(tooltipWrapper);
         });
 
         todoCard.addEventListener('mouseleave', () => {
-            todoCard.removeChild(description);
-            todoCard.removeChild(priority);
-            todoCard.removeChild(notes);
-            todoCard.removeChild(editButton);
-            todoCard.removeChild(removeButton);
+            todoCard.removeChild(tooltipWrapper);
         });
     
         const todoList = document.querySelector('.todo-list');
