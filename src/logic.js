@@ -12,6 +12,14 @@ const projectList = (() => {
 
     const addProject = (project) => {
         list.push(project);
+        console.log(list);
+        localSave.set('projects', list);
+    };
+
+    const removeProject = (project) => {
+        const index = list.indexOf(project);
+        list.splice(index, 1);
+        console.log(list);
         localSave.set('projects', list);
     };
 
@@ -31,7 +39,7 @@ const projectList = (() => {
         localSave.set('projects', list);
     };
 
-    return {get, getCurrentProject, addProject, addTodoToCurrentProject, removeTodoFromCurrentProject};
+    return {get, getCurrentProject, addProject, removeProject, addTodoToCurrentProject, removeTodoFromCurrentProject};
 })();
 
 const projectLogic = (() => {
@@ -46,9 +54,16 @@ const projectLogic = (() => {
 
     const selector = (() => {
         let selector;
-    
+
         const set = (project) => {
             selector = projectList.get().indexOf(project);
+            localSave.set("selector", selector);
+        };
+
+        const setAfterDeletion = (project) => {
+            selector = projectList.get().indexOf(project);
+            if (selector === projectList.get().length - 1 && projectList.get().length !== 1) selector -= 1;
+            console.log(selector);
             localSave.set("selector", selector);
         };
     
@@ -61,7 +76,7 @@ const projectLogic = (() => {
             return getSelector;
         };
     
-        return {set, retrieve, get};
+        return {set, setAfterDeletion, retrieve, get};
     })();
 
     return {create, selector};
