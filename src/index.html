@@ -10,25 +10,25 @@
         <h1>To-do List</h1>
         <p>(This is my longest TOP project so far, help me)</p>
     </header>
+    <aside>
+        <h2>Your Projects</h2>
+        <button id="createNewProject">Create New Project</button>
+        <div id="projectList"></div>
+        <dialog id="createProject">
+            <form method="dialog" id="projectForm">
+                <h3>Create New Project Here!</h3>
+                <div class="project-input">
+                    <label for="newProject">Project Name</label>
+                    <input type="text" name="newProject" id="newProject" required>
+                </div>
+                <div class="project-button">
+                    <input type="submit" value="Create new project">
+                </div>
+            </form>
+            <button id="cancelNewProject">Cancel</button>
+        </dialog>
+    </aside>
     <section>
-        <aside>
-            <h2>Your Projects</h2>
-            <button id="createNewProject">Create New Project</button>
-            <div id="projectList"></div>
-            <dialog id="createProject">
-                <form method="dialog" id="projectForm">
-                    <h3>Create New Project Here!</h3>
-                    <div class="project-input">
-                        <label for="newProject">Project Name</label>
-                        <input type="text" name="newProject" id="newProject" required>
-                    </div>
-                    <div class="project-button">
-                        <input type="submit" value="Create new project">
-                    </div>
-                </form>
-                <button id="cancelNewProject">Cancel</button>
-            </dialog>
-        </aside>
         <div class="project">
             <button id="makeTodo">Create New Todo</button>
             <dialog id="createTodo">
