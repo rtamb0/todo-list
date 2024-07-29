@@ -144,9 +144,11 @@ const append = (() => {
             priority.innerHTML = "High";
             todoCard.classList.add('high');
         };
+        tooltipWrapper.appendChild(priority);
     
         const notes = document.createElement('h5');
         notes.innerHTML = todo.notes;
+        tooltipWrapper.appendChild(notes);
     
         const checklist = document.createElement('button');
         if (todo.checklist === 'off') {
