@@ -193,13 +193,7 @@ const append = (() => {
         todoCard.appendChild(checklist);
         checklist.addEventListener('click', () => {
             todos.checklist(index);
-            if (todoCard.className === 'unfinished') {
-                checklist.innerHTML = "Done";
-                todoCard.className = 'finished';
-            } else if (todoCard.className === 'finished') {
-                checklist.innerHTML = "Not done";
-                todoCard.className = 'unfinished';
-            };
+            append.project(projectList.getCurrentProject());
         });
     
         const todoList = document.querySelector('.todo-list');

@@ -112,12 +112,14 @@ const todos = (() => {
                 const year2 = todos[j + 1].dueDate.slice(0, 4);
                 const month2 = todos[j + 1].dueDate.slice(5, 7);
                 const day2 = todos[j + 1].dueDate.slice(8, 10);
-    
-                const priority1 = todos[j].priority;
+
+                const checklist1 = todos[j].checklist;
+                const checklist2 = todos[j + 1].checklist;
                 
+                const priority1 = todos[j].priority;       
                 const priority2 = todos[j + 1].priority;
     
-                if (priority2 > priority1 || ((priority2 === priority1) && (year1 > year2 || (year1 === year2 && month1 > month2) || (year1 === year2 && month1 === month2 && day1 > day2)))) {
+                if ((checklist1 === 'on' && checklist2 === 'off') || (checklist1 === checklist2) && priority2 > priority1 || ((checklist1 === checklist2) && (priority2 === priority1) && (year1 > year2 || (year1 === year2 && month1 > month2) || (year1 === year2 && month1 === month2 && day1 > day2)))) {
                     const temp = todos[j];
                     todos[j] = todos[j + 1];
                     todos[j + 1] = temp;
