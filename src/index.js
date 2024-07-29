@@ -1,3 +1,5 @@
+import 'normalize.css';
+import './style.css'
 import { projectList, todos, projectLogic, checkLocalProjectList } from "./logic";
 
 const querySelectors = (() => {
