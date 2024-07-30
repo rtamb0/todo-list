@@ -166,7 +166,7 @@ const append = (() => {
     
         const notes = document.createElement('h5');
         notes.innerHTML = todo.notes;
-        tooltipWrapper.appendChild(notes);
+        if (todo.notes !== "") tooltipWrapper.appendChild(notes);
 
         const removeButton = document.createElement('button');
         removeButton.addEventListener('click', () => {
