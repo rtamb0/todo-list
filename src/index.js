@@ -56,10 +56,14 @@ const append = (() => {
                 e.stopPropagation();
                 const warning = confirm("Are you sure you want to delete this project?");
                 if (warning) {
-                    projectLogic.selector.setAfterDeletion(currentProject);
-                    projectList.removeProject(currentProject);
-                    append.list(projectList.get());
-                    append.project(projectList.getCurrentProject());
+                    const listLength = projectList.get().length;
+                    if (listLength === 1) alert("Please create another project before deleting this one.")
+                        else {
+                            projectLogic.selector.setAfterDeletion(currentProject);
+                            projectList.removeProject(currentProject);
+                            append.list(projectList.get());
+                            append.project(projectList.getCurrentProject());
+                        };
                 };
             });
             
