@@ -176,7 +176,6 @@ const append = (() => {
                 append.project(projectList.getCurrentProject());
             };
         });
-        tooltipWrapper.appendChild(removeButton);
 
         const editButton = document.createElement('button');
         editButton.addEventListener('click', () => {
@@ -222,7 +221,12 @@ const append = (() => {
             };
             textArea.value = description.innerHTML;
         });
-        tooltipWrapper.appendChild(editButton);
+
+        const buttons = document.createElement('div');
+        buttons.className = "todo-buttons";
+        buttons.appendChild(editButton);
+        buttons.appendChild(removeButton);
+        tooltipWrapper.appendChild(buttons);
 
         todoCard.appendChild(frontWrapper);
 
