@@ -132,7 +132,7 @@ section {
     flex-direction: column;
 }
 
-.todo-list li div:nth-of-type(1) {
+.todo-list li div:nth-child(1) {
     display: flex;
     padding-left: 1.2rem;
     position: relative;
@@ -143,7 +143,7 @@ section {
     border-radius: 10px;
 }
 
-.todo-list li div:nth-of-type(1)::before {
+.todo-list li div:nth-child(1)::before {
     content: "";
     width: 20px;
     left: 0px;
@@ -151,15 +151,15 @@ section {
     position: absolute;
 }
 
-.todo-list li.low div:nth-of-type(1)::before {
+.todo-list li.low div:nth-child(1)::before {
     background-color: rgb(87, 248, 122);
 }
 
-.todo-list li.moderate div:nth-of-type(1)::before {
+.todo-list li.moderate div:nth-child(1)::before {
     background-color: rgb(245, 233, 65);
 }
 
-.todo-list li.high div:nth-of-type(1)::before {
+.todo-list li.high div:nth-child(1)::before {
     background-color: rgb(189, 11, 55);
 }
 
@@ -167,39 +167,101 @@ section {
     border-style: none;
 }
 
-.todo-list li.unfinished div:nth-of-type(1) button {
-    background-image: url(./assets/icons/checkbox.svg);
-    background-position: center;
-    background-size: 140%;
-    padding: 16px;
-}
-
 .todo-list li.finished {
+    position: relative;
     opacity: 65%;
 }
 
-.todo-list li.finished div:nth-of-type(1) button {
-    background-image: url(./assets/icons/checkbox-checked.svg);
-    background-position: center;
-    background-size: 140%;
+.todo-list li.finished div:nth-child(1)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    border-bottom: 1px solid #ffffff;
+    width: 100%;
+    right: 0;
+}
+
+.todo-list li.unfinished div:nth-child(1) button {
+    background: url(./assets/icons/checkbox.svg);
+}
+
+.todo-list li.finished div:nth-child(1) button {
+    background: url(./assets/icons/checkbox-checked.svg);
+}
+
+.todo-list li.unfinished div:nth-child(1) button:hover {
+    background: url(./assets/icons/checkbox-blank.svg);
+}
+
+.todo-list li.finished div:nth-child(1) button:hover {
+    background: url(./assets/icons/checkbox-checked-filled.svg);
+}
+
+.todo-list li.unfinished div:nth-child(1) button, .todo-list li.finished div:nth-child(1) button, .todo-list li.unfinished div:nth-child(1) button:hover, .todo-list li.finished div:nth-child(1) button:hover {
+    background-size: 100%;
     padding: 16px;
 }
 
-.todo-list li.unfinished div:nth-of-type(1) button:active {
-    background-image: url(./assets/icons/checkbox-blank.svg);
-}
-
-.todo-list li.finished div:nth-of-type(1) button:active {
-    background-image: url(./assets/icons/checkbox-checked-filled.svg);
-}
-
-.todo-list li div:nth-of-type(2) {
+.todo-list li div:nth-child(2) {
     color: var(--purple);
-    width: 90%;
+    width: 80%;
+    padding: 1rem;
     align-self: center;
     background-color: var(--lightorange);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.todo-list li div:nth-child(2) em {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.todo-list li.low div:nth-child(2) em {
+    color: rgb(87, 248, 122);
+}
+
+.todo-list li.moderate div:nth-child(2) em {
+    color: rgb(245, 233, 65);
+}
+
+.todo-list li.high div:nth-child(2) em {
+    color: rgb(189, 11, 55);
+}
+
+.todo-list li div:nth-child(2) p {
+    margin: 0;
+}
+
+.todo-list li.no-description div:nth-child(2)>p:nth-child(2) {
+    color: rgb(243, 243, 243);
+    opacity: 75%;
+}
+
+.todo-list li div:nth-child(2) .todo-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.todo-list li div:nth-child(2) button:nth-of-type(1) {
+    background: url(./assets/icons/pencil-outline.svg);
+    padding: 12px;
+}
+
+.todo-list li div:nth-child(2) button:nth-of-type(1):hover {
+    background: url('./assets/icons/pencil.svg');
+}
+
+.todo-list li div:nth-child(2) button:nth-of-type(2) {
+    background: url("./assets/icons/eraser.svg");
+    padding: 12px;
+}
+
+.todo-list li div:nth-child(2) button:nth-of-type(2):hover {
+    background: url("./assets/icons/eraser-variant.svg");
 }
 
 footer {
