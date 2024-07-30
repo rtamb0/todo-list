@@ -134,11 +134,33 @@ section {
 
 .todo-list li div:nth-of-type(1) {
     display: flex;
+    padding-left: 1.2rem;
+    position: relative;
     align-items: center;
     justify-content: space-around;
     background-color: var(--pink);
     color: var(--purple);
     border-radius: 10px;
+}
+
+.todo-list li div:nth-of-type(1)::before {
+    content: "";
+    width: 20px;
+    left: 0px;
+    height: 100%;
+    position: absolute;
+}
+
+.todo-list li.low div:nth-of-type(1)::before {
+    background-color: rgb(87, 248, 122);
+}
+
+.todo-list li.moderate div:nth-of-type(1)::before {
+    background-color: rgb(245, 233, 65);
+}
+
+.todo-list li.high div:nth-of-type(1)::before {
+    background-color: rgb(189, 11, 55);
 }
 
 .todo-list li div button {
