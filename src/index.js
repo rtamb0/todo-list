@@ -125,35 +125,11 @@ const append = (() => {
         const title = document.createElement('h3');
         title.innerHTML = todo.title;
         frontWrapper.appendChild(title);
-    
-        const description = document.createElement('p');
-        if (todo.description === "") {
-            description.innerHTML = "(No description provided)"
-            todoCard.classList.add("no-description");
-        } else description.innerHTML = todo.description;
-        tooltipWrapper.appendChild(description);
-    
+
         const dueDate = document.createElement('p');
         dueDate.innerHTML = todo.dueDate;
         frontWrapper.appendChild(dueDate);
-    
-        const priority = document.createElement('p');
-        if (todo.priority === '0') {
-            priority.innerHTML = "Low";
-            todoCard.classList.add('low');
-        } else if (todo.priority === '1') {
-            priority.innerHTML = "Moderate";
-            todoCard.classList.add('moderate');
-        } else if (todo.priority === '2') {
-            priority.innerHTML = "High";
-            todoCard.classList.add('high');
-        };
-        tooltipWrapper.appendChild(priority);
-    
-        const notes = document.createElement('h5');
-        notes.innerHTML = todo.notes;
-        tooltipWrapper.appendChild(notes);
-    
+
         const checklist = document.createElement('button');
         if (todo.checklist === 'off') todoCard.classList.add('unfinished')
             else if (todo.checklist === 'on') todoCard.classList.add('finished');
@@ -162,6 +138,35 @@ const append = (() => {
             append.project(projectList.getCurrentProject());
         });
         frontWrapper.appendChild(checklist);
+    
+        const priorityLabel = document.createElement('p');
+        priorityLabel.innerHTML = "Priority"
+        const priorityText = document.createElement('p');
+        if (todo.priority === '0') {
+            priorityText.innerHTML = "Low";
+            todoCard.classList.add('low');
+        } else if (todo.priority === '1') {
+            priorityText.innerHTML = "Moderate";
+            todoCard.classList.add('moderate');
+        } else if (todo.priority === '2') {
+            priorityText.innerHTML = "High";
+            todoCard.classList.add('high');
+        };
+        const priority = document.createElement('em');
+        priority.appendChild(priorityText);
+        priority.appendChild(priorityLabel);
+        tooltipWrapper.appendChild(priority);
+
+        const description = document.createElement('p');
+        if (todo.description === "") {
+            description.innerHTML = "(No description provided)"
+            todoCard.classList.add("no-description");
+        } else description.innerHTML = todo.description;
+        tooltipWrapper.appendChild(description);
+    
+        const notes = document.createElement('h5');
+        notes.innerHTML = todo.notes;
+        tooltipWrapper.appendChild(notes);
 
         const removeButton = document.createElement('button');
         removeButton.addEventListener('click', () => {
