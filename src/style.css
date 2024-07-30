@@ -235,6 +235,14 @@ section {
     margin: 0;
 }
 
+.todo-list li div:nth-child(2) h5 {
+    margin-bottom: 0;
+    display: inline-block;
+    background-color: var(--orange);
+    padding: 0.5rem;
+    border-radius: 12px;
+}
+
 .todo-list li.no-description div:nth-child(2)>p:nth-child(2) {
     color: rgb(243, 243, 243);
     opacity: 75%;
