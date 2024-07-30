@@ -59,6 +59,7 @@ aside #createNewProject {
 
 aside #createNewProject:hover {
     background-color: var(--purple);
+    color: white;
 } 
 
 aside #createNewProject:active {
@@ -86,7 +87,7 @@ aside #createNewProject:active {
 }
 
 #projectList li button {
-    padding: 1rem;
+    padding: 16px;
     border-style: none;
     background: url('./assets/icons/delete.svg');
 }
@@ -122,6 +123,10 @@ section {
     color: white;
 }
 
+.project #makeTodo:active {
+    background-color: rgb(204, 44, 103);
+}
+
 .todo-list li {
     display: flex;
     flex-direction: column;
@@ -133,11 +138,42 @@ section {
     justify-content: space-around;
     background-color: var(--pink);
     color: var(--purple);
+    border-radius: 10px;
+}
+
+.todo-list li div button {
+    border-style: none;
+}
+
+.todo-list li.unfinished div:nth-of-type(1) button {
+    background-image: url(./assets/icons/checkbox.svg);
+    background-position: center;
+    background-size: 140%;
+    padding: 16px;
+}
+
+.todo-list li.finished div:nth-of-type(1) button {
+    background-image: url(./assets/icons/checkbox-checked.svg);
+    background-position: center;
+    background-size: 140%;
+    padding: 16px;
+}
+
+.todo-list li.unfinished div:nth-of-type(1) button:active {
+    background-image: url(./assets/icons/checkbox-blank.svg);
+}
+
+.todo-list li.finished div:nth-of-type(1) button:active {
+    background-image: url(./assets/icons/checkbox-checked-filled.svg);
 }
 
 .todo-list li div:nth-of-type(2) {
     color: var(--purple);
+    width: 90%;
+    align-self: center;
     background-color: var(--lightorange);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 footer {

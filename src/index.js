@@ -155,13 +155,8 @@ const append = (() => {
         tooltipWrapper.appendChild(notes);
     
         const checklist = document.createElement('button');
-        if (todo.checklist === 'off') {
-            checklist.innerHTML = "Not done";
-            todoCard.classList.add('unfinished');
-        } else if (todo.checklist === 'on') {
-            checklist.innerHTML = "Done";
-            todoCard.classList.add('finished');
-        };
+        if (todo.checklist === 'off') todoCard.classList.add('unfinished')
+            else if (todo.checklist === 'on') todoCard.classList.add('finished');
         checklist.addEventListener('click', () => {
             todos.checklist(index);
             append.project(projectList.getCurrentProject());
