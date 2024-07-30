@@ -192,7 +192,7 @@ const append = (() => {
                         input.value = dueDate.innerHTML;
                         break;
                     case 'priority':
-                        switch (priority.innerHTML) {
+                        switch (priorityText.innerHTML) {
                             case 'Low':
                                 input.value = '0';
                                 break;
