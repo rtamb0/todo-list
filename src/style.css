@@ -28,6 +28,7 @@ header {
     grid-column: 1 / 2;
     background-color: var(--purple);
     color: var(--pink);
+    padding: 1rem;
 }
 
 header p {
