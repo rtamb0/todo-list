@@ -7,18 +7,48 @@
     --lightorange: rgb(255, 158, 111);
 }
 
-input:focus {
+body {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 3fr;
+    background-color: var(--navy);
+    color: var(--orange);
+    min-height: 100vh;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+input, textarea {
+    border-style: solid;
+    padding: 0.5rem;
+    border-radius: 12px;
+}
+
+input:placeholder-shown, textarea:placeholder-shown {
+    font-size: 0.8rem;
+}
+
+input:focus, textarea:focus {
     outline-style: solid;
     outline-width: 0.15rem;
     outline-color: var(--orange)
 }
 
-input:user-invalid {
+input:user-invalid, textarea:user-invalid {
     border-color: red;
+    border-style: solid;
 }
 
-input:user-valid {
+input:user-valid:required {
     border-color: rgb(47, 255, 47);
+    border-style: solid;
+}
+
+input[type=submit] {
+    border-style: none;
 }
 
 dialog {
@@ -63,12 +93,6 @@ dialog#createProject form .project-input {
     gap: 16px;
 }
 
-dialog#createProject .project-input input {
-    border-style: solid;
-    padding: 0.5rem;
-    border-radius: 12px;
-}
-
 dialog#createProject .project-button input {
     padding: 0.5rem 2rem 0.5rem 2rem;
     border-style: none;
@@ -86,19 +110,77 @@ dialog#createProject .project-button input:active {
     background-color: rgb(207, 51, 108);
 } 
 
-ul {
-    list-style: none;
+dialog#createTodo {
+    width: 40vw;
+}
+
+dialog#createTodo h3 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    text-align: center;
+}
+
+dialog#createTodo h5 {
+    margin-top: 0;
+    color: red;
+}
+
+dialog#createTodo ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+dialog#createTodo li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    color: var(--orange);
+}
+
+dialog#createTodo li:nth-of-type(1) label::after, dialog#createTodo li:nth-of-type(3) label::after, dialog#createTodo li:nth-of-type(4) label::after {
+    position: absolute;
+    content: "*";
+    color: red;
+}
+
+dialog#createTodo li input[type=text] {
+    width: 20rem;
+    height: 1rem;
+}
+
+dialog#createTodo li textarea {
+    width: 20rem;
+    height: 100px;
+    resize: horizontal;
+}
+
+dialog#createTodo datalist {
+    display: flex;
+    justify-content: space-between;
+}
+
+dialog#createTodo option {
     padding: 0;
 }
 
-body {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 3fr;
+dialog#createTodo input[type=submit] {
+    margin-top: 20px;
+    width: 100%;
+    padding: 1rem;
     background-color: var(--navy);
     color: var(--orange);
-    min-height: 100vh;
 }
+
+dialog#createTodo input[type=submit]:hover {
+    background-color: var(--pink);
+    color: white;
+}
+
+dialog#createTodo input[type=submit]:active {
+    background-color: rgb(207, 51, 108);
+} 
 
 header {
     text-align: center;
