@@ -51,12 +51,14 @@
                         </li>
                         <li>
                             <label for="priority">Priority</label>
-                            <input type="range" name="priority" id="priority" list="prioritylevel" min="0" max="2" required>
-                            <datalist id="prioritylevel">
-                                <option value="0" label="Low"></option>
-                                <option value="1" label="Mid"></option>
-                                <option value="2" label="High"></option>
-                            </datalist>
+                            <div class="range">
+                                <input type="range" name="priority" id="priority" list="prioritylevel" min="0" max="2" required>
+                                <datalist id="prioritylevel">
+                                    <option value="0" label="Low"></option>
+                                    <option value="1" label="Mid"></option>
+                                    <option value="2" label="High"></option>
+                                </datalist>
+                            </div>
                         </li>
                         <li>
                             <label for="notes">Notes</label>
