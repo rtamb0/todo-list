@@ -13,6 +13,20 @@ input:focus {
     outline-color: var(--orange)
 }
 
+input:user-invalid {
+    border-color: red;
+}
+
+input:user-valid {
+    border-color: rgb(47, 255, 47);
+}
+
+dialog {
+    background-color: var(--purple);
+    color: var(--pink);
+    border-radius: 12px;
+}
+
 dialog[open] {
     display: flex;
     flex-direction: column;
@@ -28,12 +42,6 @@ dialog button {
 
 dialog button:hover {
     background: url(./assets/icons/close-thick.svg);
-}
-
-dialog#createProject {
-    background-color: var(--purple);
-    color: var(--pink);
-    border-radius: 12px;
 }
 
 dialog#createProject h3 {
@@ -59,14 +67,6 @@ dialog#createProject .project-input input {
     border-style: solid;
     padding: 0.5rem;
     border-radius: 12px;
-}
-
-dialog#createProject .project-input input:user-invalid {
-    border-color: red;
-}
-
-dialog#createProject .project-input input:user-valid {
-    border-color: rgb(47, 255, 47);
 }
 
 dialog#createProject .project-button input {
