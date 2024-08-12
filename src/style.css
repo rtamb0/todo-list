@@ -460,4 +460,6 @@ footer img {
     width: 2rem;
 }
 
-
+footer a:visited {
+    color: var(--pink);
+}
