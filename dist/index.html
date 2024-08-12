@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+<script defer src="main.js"></script></head>
+<body>
+    <header>
+        <h1>To-do List</h1>
+        <p>(This is my longest TOP project so far, help me)</p>
+    </header>
+    <aside>
+        <h2>Your Projects</h2>
+        <button id="createNewProject">Create New Project</button>
+        <div id="projectList"></div>
+        <dialog id="createProject">
+            <button id="cancelNewProject"></button>
+            <h3>Create New Project Here!</h3>
+            <form method="dialog" id="projectForm">
+                <div class="project-input">
+                    <label for="newProject">Project Name</label>
+                    <input type="text" name="newProject" id="newProject" required>
+                </div>
+                <div class="project-button">
+                    <input type="submit" value="Create">
+                </div>
+            </form>
+        </dialog>
+    </aside>
+    <section>
+        <div class="project">
+            <button id="makeTodo">Create New To-do</button>
+            <dialog id="createTodo">
+                <button id="cancelTodo"></button>
+                <h3>Create your to-do here!</h3>
+                <h5>Mandatory fields will be marked by *</h5>
+                <form method="dialog" id="todoForm">
+                    <ul>
+                        <li>
+                            <label for="title">Title</label>
+                            <input type="text" id="title" name="title" placeholder="E.g. Taking the bin out, do my homeworks, etc" required>
+                        </li>
+                        <li>
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" cols="30" rows="10" placeholder="Details of your to-dos (optional)"></textarea>
+                        </li>
+                        <li>
+                            <label for="duedate">Due Date</label>
+                            <input type="date" name="duedate" id="duedate" required>
+                        </li>
+                        <li>
+                            <label for="priority">Priority</label>
+                            <div class="range">
+                                <input type="range" name="priority" id="priority" list="prioritylevel" min="0" max="2" required>
+                                <datalist id="prioritylevel">
+                                    <option value="0" label="Low"></option>
+                                    <option value="1" label="Mid"></option>
+                                    <option value="2" label="High"></option>
+                                </datalist>
+                            </div>
+                        </li>
+                        <li>
+                            <label for="notes">Notes</label>
+                            <input type="text" name="notes" id="notes" placeholder="Add any additional information on here...">
+                        </li>
+                        <li>
+                            <label for="checklist">Is it done?</label>
+                            <input type="checkbox" name="checklist" id="checklist">
+                        </li>
+                        <li>
+                            <input type="submit" value="Create">
+                        </li>
+                    </ul>
+                </form>
+            </dialog>
+        </div>
+    </section>
+    <footer>
+        <p>Made by <a href="https://github.com/rtamb0">rtamb0</a></p>
+        <img src="github-550985caaa8859d4b95f.svg" alt="Github icon">
+    </footer>
+</body>
+</html>
