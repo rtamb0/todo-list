@@ -116,8 +116,11 @@ dialog#createTodo {
 
 dialog#createTodo h3 {
     font-size: 1.8rem;
-    margin-top: 0;
     text-align: center;
+    color: var(--navy);
+    background-color: var(--orange);
+    padding: 1.5rem;
+    margin: 0.5rem -1rem 1rem -1rem
 }
 
 dialog#createTodo h5 {
